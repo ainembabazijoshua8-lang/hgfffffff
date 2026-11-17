@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#3B4749" />
+
+    <!-- SEO essentials -->
+    <title>Jebri Safaris | East African Adventure & Tours — Tanzania & Kenya</title>
+    <meta name="description" content="Unforgettable East African safaris across Tanzania and Kenya. Wildlife safaris, Kilimanjaro treks, and cultural tours. Trusted local operator, Est. 2026." />
+    <meta name="keywords" content="African safari, Tanzania safari, Kenya safari, Kilimanjaro trekking, Serengeti, Maasai Mara, luxury safari, Jebri Safaris" />
+    <meta name="author" content="Jebri Safaris" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Jebri Safaris — East African Adventure & Tours" />
+    <meta property="og:description" content="Experience the wild: unforgettable East African safaris. Wildlife, mountains, culture." />
+    <meta property="og:image" content="/assets/images/og-cover.jpg" />
+    <meta property="og:url" content="https://jebrisafaris.com/" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Jebri Safaris — East African Adventure & Tours" />
+    <meta name="twitter:description" content="Experience the wild: unforgettable East African safaris." />
+
+    <link rel="canonical" href="https://jebrisafaris.com/" />
+    <link rel="icon" type="image/png" href="/assets/icons/favicon.png" />
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png" />
+
+    <!-- Fonts: preconnect, then load -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet" />
+
+    <!-- Leaflet Interactive Maps — SELF-HOSTED.
+         These files were fetched from the previously SRI-pinned CDN URLs and
+         their SHA-256 digests verified byte-identical to the integrity values
+         that were already in this file, so the vendored copy is provably the
+         same artefact. See public/vendor/leaflet-1.9.4/.
+
+         Why self-hosted rather than CDN:
+           - no third-party connection in the critical rendering path, on any page;
+           - served from our own origin under /assets with a 1-year immutable
+             cache, so repeat visits cost nothing;
+           - no visitor IP/referrer is disclosed to unpkg on every page load;
+           - lets script-src drop back to 'self' entirely.
+
+         `defer` is safe and necessary: as a plain classic script this ~148KB
+         file was render-blocking on EVERY route, including pages that never
+         mount a map (/privacy, /terms, /faq, /blog/:slug). SafariMap.jsx polls
+         window.L every 100ms with an 8s deadline and initialises as soon as L
+         appears, so deferring cannot race it.
+
+         The stylesheet stays render-blocking. The usual async-CSS trick
+         (media="print" onload="this.media='all'") needs an inline event
+         handler, which this app's own CSP forbids (script-src-attr 'none').
+         Same-origin means it is now a local fetch rather than a third-party
+         round trip. Leaflet's relative image/ URLs resolve under
+         public/vendor/leaflet-1.9.4/images/. -->
+    <link rel="stylesheet" href="/vendor/leaflet-1.9.4/leaflet.css" />
+    <script defer src="/vendor/leaflet-1.9.4/leaflet.js"></script>
+
+    <!-- Structured data: TravelAgency -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TravelAgency",
+      "name": "Jebri Safaris",
+      "foundingDate": "2026",
+      "url": "https://jebrisafaris.com",
+      "logo": "https://jebrisafaris.com/assets/images/logo.jpg",
+      "description": "East African safari operator offering wildlife safaris, Kilimanjaro treks, and cultural tours across Tanzania and Kenya.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Arusha",
+        "addressCountry": "TZ"
+      },
+      "areaServed": ["Tanzania", "Kenya", "East Africa"],
+      "priceRange": "$$-$$$$"
+    }
+    </script>
+  </head>
+  <body class="bg-cream-50 text-teal-800 font-body antialiased">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

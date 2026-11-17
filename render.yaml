@@ -1,0 +1,47 @@
+# render.yaml — one-click deploy on Render (https://render.com)
+# The app serves BOTH the API and the built SPA from a single Node service,
+# so no CORS / separate frontend host is required.
+#
+# After creating the service from this file, set the `sync: false` env vars
+# (ALLOWED_ORIGINS, ADMIN_*, MAIL_*) in the Render dashboard.
+services:
+  - type: web
+    name: jebri-safaris
+    runtime: node
+    plan: starter            # free tier sleeps when idle; use standard for prod
+    region: oregon           # pick the region nearest your users
+    branch: main
+    buildCommand: npm install && npm run build
+    startCommand: node server/index.js --prod
+    healthCheckPath: /api/health
+    disk:
+      name: jebri-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "8787"
+      - key: DATABASE_URL
+        value: file:/var/data/jolo.db
+      - key: BACKUP_DIR
+        value: /var/data/backups
+      - key: TRUST_PROXY
+        value: "true"        # Render is the reverse proxy in front of Node
+      - key: ALLOWED_ORIGINS
+        sync: false          # e.g. https://www.jebrisafaris.com
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false          # scrypt$... hash, NOT plaintext
+      - key: MAIL_TO_BUSINESS
+        value: jebrisafaris@gmail.com
+      - key: MAIL_BCC_FOUNDERS
+        value: ainembabazijoshua8@gmail.com,mncblacs@gmail.com
+      - key: MAIL_HOST
+        sync: false
+      - key: MAIL_USER
+        sync: false
+      - key: MAIL_PASS
+        sync: false

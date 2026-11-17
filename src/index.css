@@ -1,0 +1,573 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Jebri Safaris — global styles */
+
+@layer base {
+  :root {
+    --safari-cream: #faf7f2;
+    --safari-forest: #1a3d35;
+    --safari-forest-deep: #16352f;
+    --safari-sage: #55735b;
+    --safari-sand: #e8e0d0;
+    --safari-sunset: #c9683d;
+    --safari-gold: #d6a84f;
+  }
+
+  html { scroll-behavior: smooth; background: var(--safari-cream); }
+  body {
+    background-color: var(--safari-cream);
+    background-image: radial-gradient(circle at 8% 12%, rgba(214, 168, 79, 0.045), transparent 24rem);
+    color: #26332F;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection { background: var(--safari-sunset); color: #FFFFFF; }
+  img { max-width: 100%; height: auto; }
+  button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+  :focus-visible { outline: 3px solid rgba(201, 104, 61, 0.65); outline-offset: 3px; }
+}
+
+@layer components {
+  .container-x { @apply max-w-7xl mx-auto px-5 sm:px-6 lg:px-8; }
+
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold
+           bg-teal-800 hover:bg-teal-900 text-cream-50 hover:scale-[1.03]
+           shadow-card transition-all duration-300 ease-out
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta-300 focus-visible:ring-offset-2;
+  }
+  .btn-primary:hover { box-shadow: 0 0 20px rgba(26, 61, 53, 0.35); }
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold
+           border-2 border-cream-50/80 text-cream-50 hover:bg-cream-50 hover:text-teal-800 hover:scale-[1.03]
+           shadow-sm hover:shadow-cardHover transition-all duration-300 ease-out;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full font-medium
+           text-teal-800 hover:bg-sage-100 hover:text-teal-900 hover:scale-[1.02] transition-all duration-300;
+  }
+
+  /* Section headings */
+  .section-title {
+    @apply font-display text-3xl sm:text-4xl md:text-5xl text-teal-800 leading-tight;
+  }
+  .eyebrow {
+    /* terracotta-400 (#C9683D) on the cream-50 page background measured 3.80:1,
+       below the WCAG 2.1 AA threshold of 4.5:1 for small text. These are
+       text-xs -> text-sm semibold labels, so the 3:1 large-text allowance does
+       not apply. terracotta-500 (#A84D2D) measures 5.58:1 and keeps the warm
+       brand tone. Fixed here rather than at 39 call sites in 12 files. */
+    @apply inline-block text-terracotta-500 uppercase tracking-[0.18em] text-xs sm:text-sm font-semibold;
+  }
+
+  /* Cards */
+  .card {
+      @apply bg-cream-50 rounded-2xl overflow-hidden shadow-card hover:shadow-cardHover
+        hover:-translate-y-1 hover:border-sage-200 border border-savanna-100
+           transition-all duration-300;
+  }
+
+  .glass-card {
+      @apply bg-cream-50/80 backdrop-blur-md border border-white/70 shadow-sm
+           hover:shadow-cardHover hover:-translate-y-1 transition-all duration-300;
+  }
+
+  /* Inputs */
+  .field {
+    @apply w-full bg-cream-50/90 border border-savanna-200 rounded-xl px-4 py-3 text-teal-800
+           focus:outline-none focus:ring-2 focus:ring-terracotta-300 focus:border-terracotta-300
+           placeholder:text-teal-500/60 transition-all duration-200;
+    box-shadow: inset 0 2px 10px rgba(201, 104, 61, 0.05);
+  }
+  .label {
+    @apply block text-sm font-medium text-teal-700 mb-1.5;
+  }
+
+  /* Star rating */
+  .stars {
+    color: #D6A84F;
+    filter: drop-shadow(0 0 2px rgba(214, 168, 79, 0.4));
+  }
+}
+
+/* Animations */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Section dividers */
+.section-divider {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+/* Tiny utility for line-clamp 3 lines */
+.clamp-2 { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.clamp-3 { display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+
+/* Hide scrollbar on horizontal chip rails while keeping them scrollable */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; width: 0; height: 0; }
+
+/* Blog responsive grid — auto-fill prevents awkward single-card rows */
+.grid-auto-fill {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+/* Reading progress bar */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  height: 3px;
+  background: linear-gradient(to right, #c9683d, #a84d2d);
+  transition: width 0.15s ease-out;
+}
+
+/* Toast notifications */
+.toast-container {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Table of Contents active state */
+.toc-link-active {
+  color: #c9683d;
+  background-color: rgba(201, 104, 61, 0.05);
+  border-left: 3px solid #c9683d;
+}
+
+/* Category filter active state */
+.filter-active {
+  background-color: #c9683d;
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(201, 104, 61, 0.3);
+}
+
+/* Hero banner overlay improvements */
+.hero-text-shadow {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Mobile drawer for TOC */
+@media (max-width: 1023px) {
+  .toc-mobile {
+    position: sticky;
+    top: 4rem;
+    z-index: 20;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid-auto-fill,
+  .progress-bar,
+  .toast-container {
+    transition: none;
+  }
+}
+
+/* Leaflet overrides — SafariMap
+   ---------------------------------------------------------------------------
+   Containment rules that matter:
+   1. .safari-map-shell owns the only positioning context and clips everything.
+      isolation:isolate starts a stacking context, so an overlay z-index can
+      never escape and paint over the sticky site header.
+   2. .safari-map-canvas is absolutely positioned inset:0 rather than
+      height:100%. A percentage height against an auto-height parent resolves
+      to auto, which is the usual cause of a zero-height Leaflet container and
+      the resulting blank/grey tiles.
+   3. The canvas has an opaque background so a tile or CDN failure shows a
+      deliberate colour instead of a transparent div. */
+
+.safari-map-shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+  contain: layout paint;
+  overflow: hidden;
+  border-radius: 1rem;
+  min-height: 440px;
+  height: 500px;
+  background-color: #e8e0d0;
+  border: 1px solid #e8e0d0;
+}
+@media (min-width: 640px) {
+  .safari-map-shell { min-height: 520px; height: 560px; }
+}
+
+.safari-map-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background-color: #e8e0d0;
+}
+
+/* Every overlay is absolutely positioned inside the shell. Nothing here uses
+   position:fixed or position:sticky, so controls cannot detach on scroll. */
+.safari-map-overlay {
+  position: absolute;
+  z-index: 400;
+}
+.safari-map-overlay--tl { top: 0.75rem; left: 0.75rem; }
+.safari-map-overlay--tr { top: 0.75rem; right: 0.75rem; }
+.safari-map-overlay--bl { bottom: 0.75rem; left: 0.75rem; }
+.safari-map-overlay--br { bottom: 0.75rem; right: 0.75rem; }
+.safari-map-overlay--bottom {
+  bottom: 0.75rem;
+  left: 0.75rem;
+  right: 0.75rem;
+}
+
+/* Scrim + sheet entrance. Kept short and opacity-only: the map drawer sits
+   above live map content, so a long transform animation would visibly lag the
+   pin the visitor just tapped. */
+@keyframes safari-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-fade-in {
+  animation: safari-fade-in 180ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in {
+    animation: none;
+  }
+}
+
+.safari-map-panel {
+  background-color: rgba(250, 247, 242, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(232, 224, 208, 0.9);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(38, 51, 47, 0.12);
+}
+
+/* State strips: loading / error / no-key */
+.safari-map-state {
+  position: absolute;
+  inset: 0;
+  z-index: 350;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  text-align: center;
+  background-color: #e8e0d0;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(38, 51, 47, 0.04) 0 10px,
+    transparent 10px 20px
+  );
+}
+
+.safari-map .leaflet-container {
+  font-family: inherit;
+  background: #e8e0d0;
+}
+.safari-map .leaflet-control-attribution {
+  background: rgba(250, 247, 242, 0.85) !important;
+  font-size: 10px;
+  color: #26332F;
+  padding: 1px 6px;
+  border-radius: 6px 0 0 0;
+}
+.safari-map .leaflet-control-attribution a { color: #1a3d35; }
+.safari-map .leaflet-bar a { color: #1a3d35; border-bottom-color: #e8e0d0; }
+.safari-map .leaflet-bar a:hover { background: #faf7f2; }
+
+/* Strip Leaflet's default icon chrome so the custom emoji pin renders clean */
+.safari-map .custom-safari-marker { background: none; border: none; }
+.safari-map a.leaflet-marker-icon:focus-visible {
+  outline: 3px solid rgba(201, 104, 61, 0.85);
+  outline-offset: 3px;
+  border-radius: 9999px;
+}
+
+/* Label sits below the pin. The wrapper is 40x40 and the label overflows it,
+   so the icon must not clip. */
+.safari-pin {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.safari-pin__label {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: #faf7f2;
+  background-color: rgba(26, 61, 53, 0.9);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Reduce motion is handled globally; respect it for the ping pulse too */
+@media (prefers-reduced-motion: reduce) {
+  .safari-pin__pulse { display: none; }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================================
+   Safari atlas — clustering, label collision, boundaries, drawer, responsive UI
+   ============================================================================
+   Tokens below are mirrored in src/components/map/tokens.js. If you change a
+   value here, change it there too: JS needs the numbers for layout maths while
+   CSS needs them for painting, and the two must not drift. */
+
+:root {
+  /* Brand colours as specified for the atlas. Deliberately separate from
+     --safari-forest (#1a3d35), which is the page chrome colour; these are the
+     map-specific marks that sit on top of satellite imagery. */
+  --map-forest: #1a362b;
+  --map-gold: #c9a227;
+  --map-terracotta: #c9683d;
+
+  /* Published by useDrawerViewportSync so global widgets can react to the map
+     drawer opening without being told about it through props. */
+  --map-drawer-z: 55;
+  --map-drawer-offset: 0px;
+  --map-drawer-reserve: 0px;
+}
+
+/* --- Cluster icons ------------------------------------------------------- */
+.safari-cluster {
+  position: relative;
+  width: var(--cluster-size);
+  height: var(--cluster-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.safari-cluster__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: var(--map-forest);
+  /* Gold ring rather than a second fill: reads over both light topo and dark
+     satellite imagery without shifting the cluster's apparent size. */
+  box-shadow: 0 0 0 3px var(--map-gold), 0 4px 10px rgba(0, 0, 0, 0.35);
+}
+.safari-cluster__count {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.safari-cluster__kinds {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  z-index: 2;
+  font-size: 10px;
+  background: var(--map-cream, #faf7f2);
+  border-radius: 9999px;
+  padding: 1px 3px;
+  line-height: 1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+.safari-cluster__label {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 4px;
+  white-space: nowrap;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: #faf7f2;
+  background-color: rgba(26, 54, 43, 0.92);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+/* Labels are hover/focus-only by default: at low zoom, showing every place
+   name produces an unreadable pile of overlapping tags. */
+.safari-cluster:hover .safari-cluster__label,
+.safari-cluster:focus-visible .safari-cluster__label {
+  opacity: 1;
+}
+
+/* --- Label collision avoidance ------------------------------------------- */
+/* Only one pin label may be open at a time. Leaflet sets this attribute on the
+   container whenever a marker is hovered or focused, which gives us a single
+   global "someone is pointing at something" signal without any JS bookkeeping
+   and without labels popping open under the cursor. */
+.safari-map[data-pointing="true"] .safari-pin__label,
+.safari-map[data-pointing="true"] .safari-cluster__label {
+  opacity: 0 !important;
+}
+.safari-map[data-pointing="true"] .safari-pin__label.is-pointed,
+.safari-map[data-pointing="true"] .safari-cluster__label.is-pointed {
+  opacity: 1 !important;
+}
+
+/* --- GeoJSON boundaries -------------------------------------------------- */
+.safari-boundary-tooltip {
+  background: rgba(26, 54, 43, 0.94);
+  border: none;
+  color: #faf7f2;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 6px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+.safari-boundary-tooltip::before { border-top-color: rgba(26, 54, 43, 0.94) !important; }
+
+/* --- Itinerary legs ------------------------------------------------------ */
+.safari-leg-tooltip {
+  background: rgba(26, 54, 43, 0.94);
+  border: none;
+  color: #faf7f2;
+  font-size: 11px;
+  border-radius: 6px;
+}
+.safari-leg-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+/* --- Detail drawer ------------------------------------------------------- */
+/* Geometry lives here as tokens, not as literals repeated in JS.
+   --map-drawer-width is read by computeDrawerLayout() (drawerViewport.js) to
+   reserve space for the panel, which is what shifts the WhatsApp floater clear
+   of it. Duplicating the width in both places let the floater drift out from
+   under the drawer whenever only the CSS changed. */
+:root {
+  --map-drawer-width: 360px;
+  --map-drawer-sheet-height: 58vh;
+}
+
+/* Portaled to <body>, so it needs its own z-index and its own scrim rather than
+   relying on the map shell's stacking context. */
+.safari-map-drawer {
+  position: fixed;
+  z-index: var(--map-drawer-z);
+  background: #faf7f2;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+/* Desktop: side panel on the right. */
+.safari-map-drawer--side {
+  top: 50%;
+  right: 1.25rem;
+  transform: translateY(-50%);
+  width: min(var(--map-drawer-width), calc(100vw - 2.5rem));
+  max-height: min(72vh, 640px);
+  border-radius: 1rem;
+  overflow-y: auto;
+}
+/* Mobile: bottom sheet that leaves the top of the map visible so the user keeps
+   their spatial context. */
+.safari-map-drawer--sheet {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: var(--map-drawer-sheet-height);
+  border-radius: 1rem 1rem 0 0;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+@media (max-width: 767px) {
+  .safari-map-drawer--sheet { width: 100%; }
+}
+
+/* --- Floating widget coordination ---------------------------------------- */
+/* useDrawerViewportSync sets body[data-map-drawer]. Global widgets shift so a
+   sheet never buries the WhatsApp button, and neither widget can be covered by
+   the portaled drawer. */
+.whatsapp-floater {
+  transition: transform 0.28s ease, opacity 0.28s ease;
+}
+body[data-map-drawer="open"][data-map-drawer-mode="sheet"] .whatsapp-floater {
+  transform: translateY(calc(var(--map-drawer-offset) * -1));
+}
+/* Side-panel mode reserves horizontal space instead, so no vertical shift. */
+body[data-map-drawer="open"][data-map-drawer-mode="side-panel"] .whatsapp-floater {
+  right: calc(1.25rem + var(--map-drawer-reserve));
+}
+
+/* --- Responsive control collapse (<768px) -------------------------------- */
+.safari-map-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  align-items: center;
+}
+.safari-map-controls__toggle { display: none; }
+
+@media (max-width: 767px) {
+  /* Top-level controls collapse to a single button that opens a sliding panel,
+     keeping the canvas usable on a phone where the controls would otherwise
+     cover a large share of a small viewport. */
+  .safari-map-controls__toggle { display: inline-flex; }
+  .safari-map-controls__body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.25s ease;
+  }
+  .safari-map-controls__body > * { overflow: hidden; }
+  .safari-map-controls[data-open="true"] .safari-map-controls__body {
+    grid-template-rows: 1fr;
+  }
+  /* Quick-nav rail also scrolls horizontally rather than wrapping. */
+  .safari-map-quicknav { max-width: calc(100vw - 2rem); }
+}
+@media (min-width: 768px) {
+  .safari-map-controls__body { display: flex !important; grid-template-rows: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .safari-map-controls__body,
+  .whatsapp-floater { transition: none; }
+}

@@ -1,0 +1,28 @@
+
+        <!DOCTYPE html>
+        <html lang="en">
+          <head>
+            <meta charset="UTF-8" />
+            <title>Error</title>
+            <script type="module">
+              const error = {"message":"Transform failed with 1 error:\n\n[PARSE_ERROR] Expected `,` or `)` but found `}`\n    ╭─[ src/components/BlogFilterBar.jsx:40:12 ]\n    │\n 19 │           {CATEGORIES.map((cat) => {\n    │                          ┬  \n    │                          ╰── Opened here\n    │ \n 40 │           }}\n    │            ┬  \n    │            ╰── `,` or `)` expected\n────╯\n","stack":"    at transformWithOxc (file:///C:/Users/HP/OneDrive/Desktop/jolo-main/node_modules/vite/dist/node/chunks/node.js:3661:19)\n    at TransformPluginContext.transform (file:///C:/Users/HP/OneDrive/Desktop/jolo-main/node_modules/vite/dist/node/chunks/node.js:3732:26)\n    at EnvironmentPluginContainer.transform (file:///C:/Users/HP/OneDrive/Desktop/jolo-main/node_modules/vite/dist/node/chunks/node.js:29745:51)\n    at async loadAndTransform (file:///C:/Users/HP/OneDrive/Desktop/jolo-main/node_modules/vite/dist/node/chunks/node.js:19729:26)\n    at async viteTransformMiddleware (file:///C:/Users/HP/OneDrive/Desktop/jolo-main/node_modules/vite/dist/node/chunks/node.js:24160:20)","id":"C:/Users/HP/OneDrive/Desktop/jolo-main/src/components/BlogFilterBar.jsx","frame":"","plugin":"vite:oxc","pluginCode":"import { Link } from 'react-router-dom';\n\nconst CATEGORIES = ['All', 'Wildlife', 'Photography', 'Culture', 'Family'];\n\nexport default function BlogFilterBar({\n  activeCategory,\n  onCategoryChange,\n  searchQuery,\n  onSearchChange,\n  resultCount = 0,\n}) {\n  return (\n    \u003cdiv className=\"mb-8\">\n      \u003cdiv className=\"flex flex-col sm:items-center sm:justify-between gap-4 sm:flex-row\">\n        \u003cnav\n          aria-label=\"Filter blog posts by category\"\n          className=\"flex items-center gap-2 overflow-x-auto py-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:overflow-visible sm:py-0\"\n        >\n          {CATEGORIES.map((cat) => {\n            const isActive = activeCategory === cat;\n            return (\n              \u003cbutton\n                key={cat}\n                type=\"button\"\n                onClick={() => onCategoryChange(cat)}\n                aria-pressed={isActive}\n                className={`\n                  flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium\n                  transition-all duration-200 focus:outline-none\n                  ${\n                    isActive\n                      ? 'bg-terracotta-400 text-cream-50 shadow-md'\n                      : 'bg-cream-100 text-teal-700 hover:bg-terracotta-50 hover:text-terracotta-500 border border-savanna-200'\n                  }\n                `}\n              >\n                {cat}\n              \u003c/button>\n            );\n          }}\n        \u003c/nav>\n\n        \u003cdiv className=\"relative w-full sm:w-64\">\n          \u003clabel htmlFor=\"blog-search\" className=\"sr-only\">\n            Search articles\n          \u003c/label>\n          \u003cdiv className=\"relative\">\n            \u003csvg\n              aria-hidden=\"true\"\n              className=\"absolute left-3 top-1/2 -translate-y-1/2 text-teal-500 w-4 h-4\"\n              viewBox=\"0 0 24 24\"\n              fill=\"none\"\n              stroke=\"currentColor\"\n              strokeWidth=\"2\"\n            >\n              \u003ccircle cx=\"11\" cy=\"11\" r=\"7\" />\n              \u003cpath d=\"m20 20-4-4\" />\n            \u003c/svg>\n            \u003cinput\n              id=\"blog-search\"\n              type=\"search\"\n              value={searchQuery}\n              onChange={(e) => onSearchChange(e.target.value)}\n              placeholder=\"Search articles...\"\n              className=\"field h-10 rounded-full pl-10 pr-3 text-sm bg-cream-50 focus:bg-cream-50 border-savanna-200 focus:ring-terracotta-300\"\n              aria-label=\"Search articles by keyword\"\n            />\n          \u003c/div>\n        \u003c/div>\n      \u003c/div>\n\n      {searchQuery && resultCount === 0 && (\n        \u003cp className=\"mt-4 text-sm text-teal-600/70\">\n          No articles match \"{searchQuery}\". Try a different search term.\n        \u003c/p>\n      )}\n    \u003c/div>\n  );\n}\n"}
+              try {
+                const { ErrorOverlay } = await import("/@vite/client")
+                document.body.appendChild(new ErrorOverlay(error))
+              } catch {
+                const h = (tag, text) => {
+                  const el = document.createElement(tag)
+                  el.textContent = text
+                  return el
+                }
+                document.body.appendChild(h('h1', 'Internal Server Error'))
+                document.body.appendChild(h('h2', error.message))
+                document.body.appendChild(h('pre', error.stack))
+                document.body.appendChild(h('p', '(Error overlay failed to load)'))
+              }
+            </script>
+          </head>
+          <body>
+          </body>
+        </html>
+      
