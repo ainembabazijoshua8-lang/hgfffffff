@@ -1,0 +1,11 @@
+const store = new Map();
+globalThis.localStorage = {
+  getItem: k => (store.has(k) ? store.get(k) : null),
+  setItem: (k, v) => store.set(k, String(v)),
+  removeItem: k => store.delete(k),
+  clear: () => store.clear(),
+};
+globalThis.window = globalThis;
+globalThis.document = { documentElement: {}, body: {} };
+
+await import('../.smoke/smoke.js');

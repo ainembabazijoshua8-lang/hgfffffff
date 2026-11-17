@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Transactional / post-booking pages carry no search value
+Disallow: /thank-you
+Disallow: /admin
+
+Sitemap: https://jebrisafaris.com/sitemap.xml
