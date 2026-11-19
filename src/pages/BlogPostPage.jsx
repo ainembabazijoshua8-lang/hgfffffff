@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import ScrollProgressBar from '../components/ScrollProgressBar.jsx';
 import TableOfContents from '../components/TableOfContents.jsx';
 import ShareButtons from '../components/ShareButtons.jsx';
+import { SiteIcon } from '../components/Icons.jsx';
 
 function slugToId(heading) {
   return heading
@@ -28,52 +29,52 @@ const POSTS = {
       {
         id: 'calving-season',
         month: 'January – March',
-        icon: '🐣',
+        icon: 'egg',
         heading: 'Calving season — where it all begins',
         body: 'Around January, the herds gather on the southern Serengeti plains (Ndutu area). This is calving season — up to 8,000 calves a day for several weeks. Predators are concentrated, action is constant, and the photography is exceptional. Cheetah, leopard, and lion are highly visible as they shadow the birthing herds.',
         highlight: 'Best for: Photography, predator action, fewer crowds',
-        weather: '☀️ Dry &amp; warm',
-        crowd: '🟡 Moderate',
+        weather: 'Dry & warm',
+        crowd: 'Moderate',
       },
       {
         id: 'long-march-north',
         month: 'April – May',
-        icon: '🌧️',
+        icon: 'cloud-rain',
         heading: 'The long march north — green season magic',
         body: 'The herds begin drifting northwest through the central Serengeti. April and May are the "green season" — fewer tourists, dramatic stormy skies, and lower prices. The landscape turns bright emerald and migratory birds arrive in their thousands. A hidden gem of the calendar for those who want authenticity over crowds.',
         highlight: 'Best for: Budget-conscious travellers, landscape photography',
-        weather: '🌧️ Long rains',
-        crowd: '🟢 Quiet',
+        weather: 'Long rains',
+        crowd: 'Quiet',
       },
       {
         id: 'grumeti-crossings',
         month: 'June – July',
-        icon: '🐊',
+        icon: 'paw',
         heading: 'Western corridor — the Grumeti crossings',
         body: 'By June, the herds reach the Grumeti River in the western Serengeti. The resident crocodiles here are among the largest in Africa, having gorged themselves year after year at these very crossings. The Grumeti crossings are dramatic and far less crowded than the famous Mara, making them a favourite of experienced safari-goers.',
         highlight: 'Best for: Dramatic crossings without the peak-season crowds',
-        weather: '☀️ Dry season starts',
-        crowd: '🟡 Moderate',
+        weather: 'Dry season starts',
+        crowd: 'Moderate',
       },
       {
         id: 'mara-crossings',
         month: 'August – October',
-        icon: '🌊',
+        icon: 'waves',
         heading: 'The Mara River crossings — the iconic moment',
         body: 'The most dramatic crossings of the year. Herds mass at the Mara River — sometimes for days — before plunging across in a thunderous rush. Crocodiles, lions, and hyenas wait on the banks. This is the iconic image: a million wildebeest on the riverbanks. August and September are peak season and must be booked 6–12 months ahead.',
         highlight: 'Best for: The bucket-list crossing experience',
-        weather: '☀️ Dry & cool nights',
-        crowd: '🔴 Peak season',
+        weather: 'Dry & cool nights',
+        crowd: 'Peak season',
       },
       {
         id: 'the-return',
         month: 'November – December',
-        icon: '🔄',
+        icon: 'reset',
         heading: 'The return — closing the circle',
         body: 'The herds move south again as the short rains refresh the southern Serengeti plains. The Mara is quieter, the plains come alive with short grass, and we look forward to another calving cycle. An excellent time to visit Ngorongoro Crater and Tarangire, which are at their most vibrant.',
         highlight: 'Best for: Combining Serengeti south with Ngorongoro &amp; Tarangire',
-        weather: '🌧️ Short rains (Nov)',
-        crowd: '🟡 Moderate',
+        weather: 'Short rains (Nov)',
+        crowd: 'Moderate',
       },
     ],
     tip: {
@@ -99,7 +100,7 @@ const POSTS = {
       {
         id: 'tip-1-golden',
         month: 'Tip 1',
-        icon: '🌅',
+        icon: 'sunset',
         heading: 'Shoot in the golden hours',
         body: 'The hour after sunrise and the hour before sunset give warm light, long shadows, and active wildlife. Midday harsh sun flattens colour and sends animals to shade. Plan your most important sightings for early morning drives.',
         highlight: 'Wake-up call: 5:30am for a 6am departure',
@@ -109,7 +110,7 @@ const POSTS = {
       {
         id: 'tip-2-shutter',
         month: 'Tip 2',
-        icon: '📷',
+        icon: 'camera',
         heading: 'Know your minimum shutter speed',
         body: 'On a bouncing vehicle, start at 1/1000s for moving animals. Drop only when the vehicle is fully stopped and your subject is still. Image stabilisation helps but cannot replace a fast shutter for running cheetah or flying eagles.',
         highlight: 'For birds in flight: 1/2000s minimum',
@@ -119,7 +120,7 @@ const POSTS = {
       {
         id: 'tip-3-telephoto',
         month: 'Tip 3',
-        icon: '🔭',
+        icon: 'binoculars',
         heading: 'Bring a telephoto — but not only that',
         body: 'A 100–400mm lens covers most wildlife. Pack a wide angle too for landscapes, camps, and Milky Way shots on clear nights over the Serengeti. The skies away from city light pollution are extraordinary.',
         highlight: 'Recommended: 100–400mm + 24–70mm as a pair',
@@ -129,7 +130,7 @@ const POSTS = {
       {
         id: 'tip-4-eyes',
         month: 'Tip 4',
-        icon: '👁️',
+        icon: 'eye',
         heading: 'Watch the eyes — always the eyes',
         body: 'Sharp eyes make a portrait. Use single-point autofocus on the nearest eye, switch to continuous AF for movement, and burst mode when action starts. A tack-sharp eye with soft background bokeh is the difference between a good shot and an unforgettable one.',
         highlight: 'Enable eye-tracking AF if your camera supports it',
@@ -139,7 +140,7 @@ const POSTS = {
       {
         id: 'tip-5-respect',
         month: 'Tip 5',
-        icon: '🤫',
+        icon: 'mute',
         heading: 'Respect distance and silence',
         body: 'Great images come from patience, not chasing. Let the guide position the vehicle — sudden movement, standing up, or loud voices can end a sighting. The closer the animal, the quieter we are. Switch off motor sounds on your camera if possible.',
         highlight: 'Never ask the driver to get closer — trust the guide',
@@ -149,7 +150,7 @@ const POSTS = {
       {
         id: 'tip-6-sensor',
         month: 'Tip 6',
-        icon: '🧹',
+        icon: 'brush',
         heading: 'Clean your sensor before the trip',
         body: 'Dust spots show up most at small apertures (f/8–f/11) on clear skies and is a common frustration on safari. Have your sensor cleaned professionally before you travel, or learn the blower technique so you can do it safely in the field.',
         highlight: 'Check for dust with a sky test shot on arrival',
@@ -159,7 +160,7 @@ const POSTS = {
       {
         id: 'tip-7-batteries',
         month: 'Tip 7',
-        icon: '🔋',
+        icon: 'battery',
         heading: 'Carry spare batteries — cold drains them fast',
         body: 'Early morning crater visits and night drives in the Serengeti can drop temperatures below 10°C. Lithium batteries hold up better in the cold. Bring at least two fully charged spares per camera body and keep them in your jacket pocket close to your body.',
         highlight: 'Bring 3× the batteries you think you need',
@@ -169,7 +170,7 @@ const POSTS = {
       {
         id: 'tip-8-raw',
         month: 'Tip 8',
-        icon: '💾',
+        icon: 'save',
         heading: 'Shoot RAW if you edit later',
         body: 'RAW files give you latitude to recover highlights, adjust white balance for golden hour warmth, and pull detail from shadows. Modern editing software makes the slight file size penalty worth it. If you must shoot JPEG, at least use the highest quality setting.',
         highlight: 'RAW + JPEG if your camera supports it',
@@ -179,7 +180,7 @@ const POSTS = {
       {
         id: 'tip-9-beanbag',
         month: 'Tip 9',
-        icon: '🫘',
+        icon: 'bean',
         heading: 'Use a bean bag on the roof hatch',
         body: 'A bean bag on the vehicle\'s pop-up roof hatch is far more stable than a tripod in the cramped space, and you can reposition it instantly. Commercial bean bags with a non-slip bottom are ideal, or fill a small sock with rice as a DIY alternative.',
         highlight: 'A bean bag weighs less than your lens cap',
@@ -189,7 +190,7 @@ const POSTS = {
       {
         id: 'tip-10-presence',
         month: 'Tip 10',
-        icon: '👁️',
+        icon: 'eye',
         heading: 'Put the camera down sometimes — be present',
         body: 'A safari is not a photo shoot. Sometimes the most powerful memory is the one stored in your mind, not on a memory card. Put the camera down. Watch a lion yawn. Listen to the sounds of the bush. These moments shape your story more than any megapixel count ever will.',
         highlight: 'Your own memory matters as much as the megapixels',
@@ -220,7 +221,7 @@ const POSTS = {
       {
         id: 'principle-1',
         month: 'Principle 1',
-        icon: '🏘️',
+        icon: 'house',
         heading: 'Choose community-led experiences',
         body: 'We work exclusively with villages and cultural centres where fees go directly to the community and visits are scheduled with local leaders — not drive-by photo stops. Ask your operator how visit fees are distributed before you book.',
         highlight: 'Jebri policy: 100% of cultural visit fees go to the village',
@@ -230,7 +231,7 @@ const POSTS = {
       {
         id: 'principle-2',
         month: 'Principle 2',
-        icon: '📸',
+        icon: 'camera',
         heading: 'Ask before you photograph',
         body: 'A smile and a gesture go a long way. Some moments are private; honour that. Some elders prefer not to be photographed — respect it without making it awkward. Your guide will help translate and set expectations on both sides before you arrive.',
         highlight: 'Never photograph without consent. It is not negotiable.',
@@ -240,7 +241,7 @@ const POSTS = {
       {
         id: 'principle-3',
         month: 'Principle 3',
-        icon: '👗',
+        icon: 'shirt',
         heading: 'Dress modestly and listen more than you perform',
         body: 'Long sleeves and covered knees show respect. Participate when invited — dancing, beadwork, fire-making — but avoid treating people as cultural props. The Maasai are not a museum exhibit; they are a living, evolving community.',
         highlight: 'Modest dress, genuine curiosity, open ears',
@@ -250,7 +251,7 @@ const POSTS = {
       {
         id: 'principle-4',
         month: 'Principle 4',
-        icon: '🛍️',
+        icon: 'bag',
         heading: 'Buy crafts directly from the maker',
         body: 'Direct purchases support individual families. Fair prices — not hard bargaining — keep community programmes sustainable. The beadwork and carvings you carry home represent hours of skilled work and support school fees and healthcare.',
         highlight: 'Fair prices create long-term community benefit',
@@ -281,7 +282,7 @@ const POSTS = {
       {
         id: 'ages-under-6',
         month: 'Ages under 6',
-        icon: '👶',
+        icon: 'baby',
         heading: 'Toddlers — short drives, private vehicle',
         body: 'Under 6: keep game drives to 2–3 hours maximum. A private vehicle lets you return to camp when nap time hits. Ngorongoro Crater (shorter descent, concentrated wildlife) and Lake Manyara (flamingos, monkeys) work beautifully for the very young.',
         highlight: 'Key: private vehicle, flexible schedule, lodge with pool',
@@ -291,7 +292,7 @@ const POSTS = {
       {
         id: 'ages-6-12',
         month: 'Ages 6–12',
-        icon: '🧒',
+        icon: 'user',
         heading: 'School age — the sweet spot',
         body: 'Ages 6–12 are genuinely the best safari age. Children this age are curious, patient enough for a full game drive, and young enough to be completely awestruck. Mix wildlife with cultural visits, bush walks (with ranger), and downtime at camp. Junior ranger programmes are excellent.',
         highlight: 'Recommended: Tarangire + Ngorongoro 5-night itinerary',
@@ -301,7 +302,7 @@ const POSTS = {
       {
         id: 'teenagers',
         month: 'Teenagers',
-        icon: '🧑',
+        icon: 'user',
         heading: 'Teens — longer days and walking safaris',
         body: 'Teenagers often become the most engaged safari guests of all. Longer game drives, night drives, and walking safaris (from age 12 where allowed) add genuine adventure. Let them carry their own camera — having a creative task transforms the experience.',
         highlight: 'Allow them ownership: camera, binoculars, field guide',
@@ -311,7 +312,7 @@ const POSTS = {
       {
         id: 'lodging',
         month: 'Logistics',
-        icon: '🏕️',
+        icon: 'tent',
         heading: 'Picking the right lodges',
         body: 'Fenced camps, swimming pools, and early dinners prevent meltdowns. Avoid back-to-back six-hour drives for families. We stagger activities so children have downtime every afternoon. Properties with "bush picnics" and "sundowner" experiences make every day feel like an event.',
         highlight: 'Ask us for our vetted family-friendly lodge shortlist',
@@ -321,7 +322,7 @@ const POSTS = {
       {
         id: 'engagement',
         month: 'Preparation',
-        icon: '📚',
+        icon: 'book',
         heading: 'Engage them before you go',
         body: 'Animal checklists, junior ranger books, and a simple camera give kids a sense of ownership and purpose. Our guides love children\'s questions — often the silliest ones lead to the best conversations. Brief them on bush etiquette beforehand: quiet voices and slow movements.',
         highlight: 'Download our free Kids Safari Checklist from the FAQ page',
@@ -435,9 +436,7 @@ export default function BlogPostPage() {
       <>
         <ScrollProgressBar />
         <div className="container-x py-32 text-center">
-          <div className="text-6xl mb-4" aria-hidden="true">
-            🦒
-          </div>
+          <SiteIcon name="paw" className="text-6xl mb-4 text-teal-600" />
           <h1 className="font-display text-3xl text-teal-700">Post not found</h1>
           <p className="text-teal-700/70 mt-2">
             This article may have moved or doesn't exist.
@@ -530,9 +529,7 @@ export default function BlogPostPage() {
                     className="glass-card rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-glow"
                   >
                     <header className="bg-gradient-to-r from-cream-100 to-white/60 border-b border-cream-200/60 px-6 sm:px-8 py-5 flex flex-col sm:flex-row sm:items-center gap-4">
-                      <span className="text-2xl" aria-hidden="true">
-                        {s.icon}
-                      </span>
+                      <SiteIcon name={s.icon} className="text-2xl text-terracotta-500" />
                       <div>
                         <div className="text-xs font-semibold text-terracotta-500 uppercase tracking-wider">
                           {s.month}
@@ -544,12 +541,17 @@ export default function BlogPostPage() {
                       {(s.weather || s.crowd) && (
                         <div className="ml-auto flex gap-2 text-xs">
                           {s.weather && (
-                            <span className="bg-amber-50 border border-amber-200 text-amber-700 px-2 py-0.5 rounded-full">
+                            <span className="inline-flex items-center gap-1 bg-amber-50 border border-amber-200 text-amber-700 px-2 py-0.5 rounded-full">
+                              <SiteIcon name={/rain/i.test(s.weather) ? 'cloud-rain' : 'sun'} />
                               {s.weather}
                             </span>
                           )}
                           {s.crowd && (
-                            <span className="bg-cream-100 border border-cream-200 text-teal-700 px-2 py-0.5 rounded-full">
+                            <span className="inline-flex items-center gap-1.5 bg-cream-100 border border-cream-200 text-teal-700 px-2 py-0.5 rounded-full">
+                              <span
+                                aria-hidden="true"
+                                className={`h-2 w-2 rounded-full ${/peak/i.test(s.crowd) ? 'bg-red-500' : /quiet/i.test(s.crowd) ? 'bg-green-500' : 'bg-amber-400'}`}
+                              />
                               {s.crowd}
                             </span>
                           )}
@@ -563,7 +565,7 @@ export default function BlogPostPage() {
                       />
                       {s.highlight && (
                         <div className="mt-4 flex items-start gap-2 text-sm text-teal-700 bg-teal-50 border border-teal-100 rounded-xl px-4 py-3">
-                          <span aria-hidden="true">💡</span>
+                          <SiteIcon name="lightbulb" className="mt-0.5 text-base" />
                           <span>{s.highlight}</span>
                         </div>
                       )}
@@ -577,7 +579,7 @@ export default function BlogPostPage() {
               <div className="absolute top-0 right-0 w-64 h-64 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.1),transparent_50%)]" />
               <div className="relative z-10">
                 <h3 className="font-display text-2xl mb-3 flex items-center gap-3">
-                  <span aria-hidden="true">🧭</span> {post.tip.heading}
+                  <SiteIcon name="compass" /> {post.tip.heading}
                 </h3>
                 <p className="text-cream-50/90 leading-relaxed font-light">
                   {post.tip.body}
@@ -639,20 +641,21 @@ export default function BlogPostPage() {
 
             <div className="glass-card p-6 rounded-2xl bg-gradient-to-br from-cream-50 to-white">
               <h3 className="font-display text-xl text-teal-800 mb-4 flex items-center gap-2">
-                <span aria-hidden="true">🧭</span> Plan your trip
+                <SiteIcon name="compass" /> Plan your trip
               </h3>
               <div className="space-y-2">
                 {[
-                  { to: '/tours', label: '🦁 Browse safari tours' },
-                  { to: '/activities', label: '🎈 Add-on activities' },
-                  { to: '/booking', label: '📅 Get a custom quote' },
-                  { to: '/contact', label: '✉️ Ask a question' },
-                ].map(({ to, label }) => (
+                  { to: '/tours', icon: 'paw', label: 'Browse safari tours' },
+                  { to: '/activities', icon: 'balloon', label: 'Add-on activities' },
+                  { to: '/booking', icon: 'calendar', label: 'Get a custom quote' },
+                  { to: '/contact', icon: 'mail', label: 'Ask a question' },
+                ].map(({ to, icon, label }) => (
                   <Link
                     key={to}
                     to={to}
-                    className="block text-sm text-teal-700 hover:text-terracotta-500 py-1.5 border-b border-cream-200 last:border-0 transition"
+                    className="flex items-center gap-2 text-sm text-teal-700 hover:text-terracotta-500 py-1.5 border-b border-cream-200 last:border-0 transition"
                   >
+                    <SiteIcon name={icon} className="text-teal-500" />
                     {label}
                   </Link>
                 ))}

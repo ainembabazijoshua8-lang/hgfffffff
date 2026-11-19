@@ -4,9 +4,9 @@ const PHONE = '255657253723';
 const PHONE_ALT = '255787996608';
 
 const QUICK_MESSAGES = [
-  "I'd like to plan a safari to the Serengeti 🦁",
+  "I'd like to plan a safari to the Serengeti",
   "What's the best time to visit Tanzania?",
-  "Do you offer family-friendly safaris? 👨‍👩‍👧",
+  "Do you offer family-friendly safaris?",
   "I need a custom quote for my group",
 ];
 
@@ -71,7 +71,7 @@ export default function WhatsAppFloater() {
           {/* Chat bubble */}
           <div className="bg-cream-50/50 px-4 py-4">
             <div className="bg-white rounded-xl rounded-tl-none shadow-sm p-3 text-sm text-teal-800 max-w-[90%]">
-              👋 Hi! Ready to plan your dream safari?<br />
+              Hi! Ready to plan your dream safari?<br />
               Pick a message or tap to chat directly.
             </div>
             <div className="text-right text-[10px] text-teal-600 mt-1">Jebri Safaris</div>

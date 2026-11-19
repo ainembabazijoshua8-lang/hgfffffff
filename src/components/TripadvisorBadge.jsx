@@ -11,19 +11,24 @@ const QR_LABEL = 'Scan to Review Us on Tripadvisor';
 const TA_GREEN = '#247d38';
 const TA_GREEN_HOVER = '#1a632b';
 
+// Tripadvisor's current logo colours: black owl on a mint disc.
+const TA_LOGO_MINT = '#34E0A1';
+
 /**
- * Tripadvisor's mark: the two owl eyes from the "oo" of the wordmark, reversed
- * out of the brand green disc. Drawn locally rather than hotlinked so it cannot
- * break when a third-party badge host goes down.
+ * Tripadvisor's owl logo. The previous mark was two plain circles on a green
+ * disc, which did not read as Tripadvisor. Path data is the official owl from
+ * Simple Icons (CC0-1.0, simple-icons@13.21.0), drawn locally rather than
+ * hotlinked so it cannot break when a third-party badge host goes down.
  */
 function TaMark({ size = 56 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 80 80" fill="none" aria-hidden="true">
-      <circle cx="40" cy="40" r="38" fill={TA_GREEN} />
-      <circle cx="27.5" cy="40" r="13.5" fill="#FFFFFF" />
-      <circle cx="52.5" cy="40" r="13.5" fill="#FFFFFF" />
-      <circle cx="27.5" cy="40" r="5.5" fill={TA_GREEN} />
-      <circle cx="52.5" cy="40" r="5.5" fill={TA_GREEN} />
+    <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true">
+      <circle cx="16" cy="16" r="16" fill={TA_LOGO_MINT} />
+      <path
+        transform="translate(4 4)"
+        fill="#000000"
+        d="M12.006 4.295c-2.67 0-5.338.784-7.645 2.353H0l1.963 2.135a5.997 5.997 0 0 0 4.04 10.43 5.976 5.976 0 0 0 4.075-1.6L12 19.705l1.922-2.09a5.972 5.972 0 0 0 4.072 1.598 6 6 0 0 0 6-5.998 5.982 5.982 0 0 0-1.957-4.432L24 6.648h-4.35a13.573 13.573 0 0 0-7.644-2.353zM12 6.255c1.531 0 3.063.303 4.504.903C13.943 8.138 12 10.43 12 13.1c0-2.671-1.942-4.962-4.504-5.942A11.72 11.72 0 0 1 12 6.256zM6.002 9.157a4.059 4.059 0 1 1 0 8.118 4.059 4.059 0 0 1 0-8.118zm11.992.002a4.057 4.057 0 1 1 .003 8.115 4.057 4.057 0 0 1-.003-8.115zm-11.992 1.93a2.128 2.128 0 0 0 0 4.256 2.128 2.128 0 0 0 0-4.256zm11.992 0a2.128 2.128 0 0 0 0 4.256 2.128 2.128 0 0 0 0-4.256z"
+      />
     </svg>
   );
 }

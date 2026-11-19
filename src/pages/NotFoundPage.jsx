@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { SiteIcon } from '../components/Icons.jsx';
 
 export default function NotFoundPage() {
   return (
@@ -7,7 +8,7 @@ export default function NotFoundPage() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(201,104,61,0.15),transparent_50%)]" />
       
       <div className="relative z-10 animate-slide-up max-w-md mx-auto">
-        <div className="text-7xl mb-6 filter drop-shadow-lg">🦒</div>
+        <SiteIcon name="compass" className="text-7xl mb-6 text-terracotta-300 drop-shadow-lg" />
         <h1 className="font-display text-5xl md:text-6xl text-cream-50 drop-shadow-sm mb-4">Lost on the savanna</h1>
         <p className="text-cream-50/90 text-lg font-light leading-relaxed mb-8">
           We can't find the page you're looking for. But the giraffes spotted you.

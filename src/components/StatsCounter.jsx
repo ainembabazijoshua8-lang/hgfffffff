@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 
 const STATS = [
-  { value: 500, suffix: '+', label: 'Safaris completed', icon: '🦁' },
-  { value: 12,  suffix: '',  label: 'National parks covered', icon: '🗺️' },
-  { value: 98,  suffix: '%', label: 'Five-star guest rating', icon: '⭐' },
-  { value: 24,  suffix: 'h', label: 'Quote turnaround', icon: '⚡' },
+  { value: 500, suffix: '+', label: 'Safaris completed', icon: 'paw' },
+  { value: 12,  suffix: '',  label: 'National parks covered', icon: 'map' },
+  { value: 98,  suffix: '%', label: 'Five-star guest rating', icon: 'star' },
+  { value: 24,  suffix: 'h', label: 'Quote turnaround', icon: 'bolt' },
 ];
 
 function useCountUp(target, duration = 1600, active = false) {

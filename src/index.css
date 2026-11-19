@@ -30,7 +30,9 @@
 }
 
 @layer components {
-  .container-x { @apply max-w-7xl mx-auto px-5 sm:px-6 lg:px-8; }
+  /* Wider cap on large screens so 1920px+ displays don't leave wide empty
+     margins; sections that set their own max-w-* still win (utilities layer). */
+  .container-x { @apply max-w-7xl 2xl:max-w-[110rem] mx-auto px-5 sm:px-6 lg:px-8 2xl:px-12; }
 
   /* Buttons */
   .btn-primary {

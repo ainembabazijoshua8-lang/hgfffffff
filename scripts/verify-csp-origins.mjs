@@ -44,6 +44,11 @@ const LINK_ONLY_HOSTS = new Map([
   ['www.linkedin.com', 'outbound profile link'],
   ['www.tripadvisor.com', 'outbound review link (the CTA target)'],
   ['www.openstreetmap.org', 'iframe src is frame-src allowed; other uses are outbound links'],
+  ['carto.com', 'map attribution link (CARTO basemap credit)'],
+  ['openmaptiles.org', 'map attribution link (MapTiler satellite credit)'],
+  ['www.maptiler.com', 'map attribution link; MapTiler tiles load from api.maptiler.com'],
+  ['registry.opendata.aws', 'map attribution link for the AWS Terrain Tiles dataset'],
+  ['www.w3.org', 'SVG xmlns namespace identifier in Icons.jsx, never fetched'],
 ]);
 
 function walk(dir, acc = []) {

@@ -1,0 +1,26 @@
+# netlify.toml — Netlify hosts the built React site; the Express API runs on
+# Render (see render.yaml) and is reached through the /api proxy below.
+#
+# If your Render service gets a different URL, change it in the /api/* rule.
+
+[build]
+  command = "npm run build && node scripts/write-netlify-headers.mjs"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Forward API calls to the Express backend on Render. `force` makes sure the
+# proxy wins over any file with the same path.
+[[redirects]]
+  from = "/api/*"
+  to = "https://jebri-safaris.onrender.com/api/:splat"
+  status = 200
+  force = true
+
+# Single-page app: every other unknown path loads index.html so React Router
+# can render the page (and its own 404).
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

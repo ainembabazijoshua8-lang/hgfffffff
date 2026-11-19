@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fallbackTours as TOUR_CATALOG } from '../data/fallbackTours.js';
+import { SiteIcon } from './Icons.jsx';
 
 // Tier ranges are computed from the live catalog. They used to be hardcoded
 // strings, which drifted: "From $5,900" for luxury hid a real $4,000 tour, and
@@ -169,12 +170,12 @@ export default function LodgeTierVisualizer() {
 
             <div className="mt-5">
               <span className="block text-xs font-bold uppercase tracking-wider text-teal-900 mb-2">
-                ✨ What’s Included in This Tier:
+                <SiteIcon name="sparkles" className="mr-1 align-[-2px]" />What’s Included in This Tier:
               </span>
               <div className="grid sm:grid-cols-2 gap-2 text-xs sm:text-sm text-teal-800">
                 {activeTier.amenities.map((item, idx) => (
                   <div key={idx} className="flex items-start gap-2">
-                    <span className="text-terracotta-500 shrink-0 font-bold">✓</span>
+                    <SiteIcon name="check" className="mt-0.5 text-terracotta-500" />
                     <span>{item}</span>
                   </div>
                 ))}
@@ -192,7 +193,7 @@ export default function LodgeTierVisualizer() {
               to={`/tours/${activeSampleTour.slug}`}
               className="btn-primary py-2.5 px-5 text-xs font-bold"
             >
-              Explore {activeSampleTour.slug.includes('camping') ? 'Camping' : activeTier.id === 'luxury' ? 'Luxury' : 'Classic'} Safari ➔
+              Explore {activeSampleTour.slug.includes('camping') ? 'Camping' : activeTier.id === 'luxury' ? 'Luxury' : 'Classic'} Safari <SiteIcon name="arrow-right" />
             </Link>
           </div>
         </div>

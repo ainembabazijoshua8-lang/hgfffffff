@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { SiteIcon } from './Icons.jsx';
 
 const STORAGE_KEY = 'jebri_newsletter_dismissed';
 const SHOW_DELAY_MS = 45_000; // 45 seconds after page load
@@ -85,13 +86,13 @@ export default function NewsletterModal() {
           {/* Header image band */}
           <div className="h-32 bg-gradient-to-br from-teal-800 to-teal-950 relative overflow-hidden flex items-center justify-center">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(201,104,61,0.25),transparent_50%)]" />
-            <span className="text-5xl relative z-10 drop-shadow-lg">🦁</span>
+            <SiteIcon name="compass" className="text-5xl relative z-10 text-terracotta-300 drop-shadow-lg" />
           </div>
 
           <div className="p-6 sm:p-8">
             {status === 'ok' ? (
               <div className="text-center py-4">
-                <div className="w-14 h-14 mx-auto rounded-full bg-sage-100 text-sage-700 flex items-center justify-center text-2xl mb-3">✓</div>
+                <div className="w-14 h-14 mx-auto rounded-full bg-sage-100 text-sage-700 flex items-center justify-center text-2xl mb-3"><SiteIcon name="check" /></div>
                 <h3 className="font-display text-2xl text-teal-800 dark:text-cream-50 font-bold">You're on the list!</h3>
                 <p className="mt-2 text-teal-700/80 dark:text-cream-100/80 text-sm">Safari tips and migration updates will land in your inbox soon.</p>
                 <button onClick={dismiss} className="btn-primary mt-5 text-sm">Continue exploring</button>
@@ -118,7 +119,7 @@ export default function NewsletterModal() {
                     disabled={status === 'loading'}
                     className="btn-primary w-full disabled:opacity-50"
                   >
-                    {status === 'loading' ? 'Subscribing…' : 'Send Me the Guide 📩'}
+                    {status === 'loading' ? 'Subscribing…' : <>Send Me the Guide <SiteIcon name="mail" className="ml-1 align-[-2px]" /></>}
                   </button>
                   {status === 'err' && (
                     <p className="text-center text-sm text-red-600 mt-1">
@@ -142,7 +143,7 @@ export default function NewsletterModal() {
             className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/30 text-white flex items-center justify-center text-sm hover:bg-black/50 transition"
             aria-label="Close"
           >
-            ✕
+            <SiteIcon name="close" />
           </button>
         </div>
       </div>

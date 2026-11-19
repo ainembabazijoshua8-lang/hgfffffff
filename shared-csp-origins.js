@@ -53,6 +53,12 @@ export const CSP_IMG_ORIGINS = [
 ];
 
 export const CSP_CONNECT_ORIGINS = [
+  // MapLibre (MapLibreSafariMap.jsx) fetches its style JSON, vector tiles,
+  // glyphs and sprites with fetch(), so these need connect-src, not just img-src.
+  'https://basemaps.cartocdn.com',
+  'https://tiles.basemaps.cartocdn.com',
+  // Key-less terrain tiles for 3D relief (map/maplibre/terrain.js).
+  'https://elevation-tiles-prod.s3.amazonaws.com',
   // Not used by the current Leaflet tile template, but mapbox-gl fetches styles
   // and tiles over XHR. Declared now so a renderer swap cannot silently break.
   'https://api.mapbox.com',
@@ -91,7 +97,8 @@ export function buildCspDirectives(isProd) {
     defaultSrc: ["'self'"],
     scriptSrc: ["'self'", ...CSP_SCRIPT_ORIGINS],
     styleSrc: ["'self'", "'unsafe-inline'", ...CSP_STYLE_ORIGINS],
-    imgSrc: ["'self'", 'data:', ...CSP_IMG_ORIGINS],
+    // blob: — MapLibre decodes tile and sprite images through blob URLs.
+    imgSrc: ["'self'", 'data:', 'blob:', ...CSP_IMG_ORIGINS],
     connectSrc: ["'self'", ...CSP_CONNECT_ORIGINS],
     fontSrc: ["'self'", 'data:', ...CSP_FONT_ORIGINS],
     frameSrc: ["'self'", ...CSP_FRAME_ORIGINS],

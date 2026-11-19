@@ -9,6 +9,7 @@ import { tourJsonLd, JsonLdScript } from '../utils/jsonLd.jsx';
 import { tourParkIds } from '../utils/tourParkIds.js';
 import { useCurrency } from '../context/CurrencyContext.jsx';
 import { estimateTourPricing, maxTravelersFor } from '../../shared-pricing.js';
+import { SiteIcon } from '../components/Icons.jsx';
 
 const TIER_LABEL = {
   budget: 'Budget-friendly Camping',
@@ -17,8 +18,8 @@ const TIER_LABEL = {
 };
 
 const TAG_ICON = {
-  solo: '🧭', couples: '💑', family: '👨‍👩‍👧', group: '👥',
-  honeymoon: '💍', photography: '📷', birding: '🦜',
+  solo: 'compass', couples: 'heart', family: 'users', group: 'users',
+  honeymoon: 'gem', photography: 'camera', birding: 'bird',
 };
 
 // Pricing rules live in shared-pricing.js so this page, the trip planner and
@@ -191,7 +192,7 @@ export default function TourDetailPage() {
               onClick={shareTourWhatsApp}
               className="bg-[#25D366] hover:bg-[#1EBE5D] text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs font-bold transition flex items-center gap-1.5 shadow-sm"
             >
-              <span>💬</span>
+              <SiteIcon name="whatsapp" className="text-base" />
               <span className="hidden sm:inline">WhatsApp Us</span>
             </button>
             <a
@@ -224,7 +225,7 @@ export default function TourDetailPage() {
               className="hidden sm:flex items-center gap-1.5 text-xs text-cream-100/80 hover:text-cream-50 bg-white/10 hover:bg-white/20 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 transition"
               title="Print or Save PDF"
             >
-              <span>📄</span>
+              <SiteIcon name="printer" />
               <span>Print / Download PDF</span>
             </button>
           </div>
@@ -253,17 +254,17 @@ export default function TourDetailPage() {
             <div className="mt-4 flex flex-wrap gap-2">
               {tour.best_for.map(b => (
                 <span key={b} className="inline-flex items-center gap-1.5 text-xs bg-white/20 backdrop-blur-md text-cream-50 border border-white/30 px-3.5 py-1.5 rounded-full shadow-sm">
-                  <span>{TAG_ICON[b] || '•'}</span> {b}
+                  <SiteIcon name={TAG_ICON[b] || 'check'} /> {b}
                 </span>
               ))}
             </div>
           )}
 
           <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-cream-100/90 items-center text-xs sm:text-sm">
-            <span className="font-medium">⏱ {tour.duration_days} {tour.duration_days === 1 ? 'day' : 'days'}</span>
-            <span>👥 Max {tour.group_size_max || 2} travelers per 4x4</span>
-            <span className="font-bold text-gold-400 text-sm sm:text-base">
-              💵 From {formatPrice(tour.price_usd)} / person
+            <span className="font-medium inline-flex items-center gap-1.5"><SiteIcon name="clock" /> {tour.duration_days} {tour.duration_days === 1 ? 'day' : 'days'}</span>
+            <span className="inline-flex items-center gap-1.5"><SiteIcon name="users" /> Max {tour.group_size_max || 2} travelers per 4x4</span>
+            <span className="font-bold text-gold-400 text-sm sm:text-base inline-flex items-center gap-1.5">
+              <SiteIcon name="wallet" /> From {formatPrice(tour.price_usd)} / person
             </span>
             <span className="text-cream-100/75">
               {tour.group_size_max === 6 ? 'Based on 6 pax group load' : 'Double occupancy (2 adults sharing)'}
@@ -421,14 +422,14 @@ export default function TourDetailPage() {
             <div className="grid sm:grid-cols-2 gap-6">
               <div className="bg-sage-50/70 border border-sage-200 rounded-2xl p-6 shadow-sm">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="w-6 h-6 rounded-full bg-sage-600 text-white flex items-center justify-center text-xs font-bold">✓</span>
+                  <span className="w-6 h-6 rounded-full bg-sage-600 text-white flex items-center justify-center text-xs font-bold"><SiteIcon name="check" /></span>
                   <h3 className="font-display text-lg font-bold text-teal-900">What’s Included</h3>
                 </div>
                 {hasInclusionData ? (
                   <ul className="space-y-2.5 text-xs sm:text-sm text-teal-900">
                     {includedItems.map((item, i) => (
                       <li key={i} className="flex items-start gap-2">
-                        <span className="text-sage-600 font-bold shrink-0">✓</span>
+                        <SiteIcon name="check" className="mt-0.5 text-sage-600" />
                         <InclusionLine text={item} />
                       </li>
                     ))}
@@ -443,13 +444,13 @@ export default function TourDetailPage() {
 
               <div className="bg-cream-100/70 border border-savanna-200 rounded-2xl p-6 shadow-sm">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="w-6 h-6 rounded-full bg-terracotta-400 text-white flex items-center justify-center text-xs font-bold">✗</span>
+                  <span className="w-6 h-6 rounded-full bg-terracotta-400 text-white flex items-center justify-center text-xs font-bold"><SiteIcon name="close" /></span>
                   <h3 className="font-display text-lg font-bold text-teal-900">Standard Exclusions</h3>
                 </div>
                 <ul className="space-y-2.5 text-xs sm:text-sm text-teal-800">
                   {excludedItems.map((item, i) => (
                     <li key={i} className="flex items-start gap-2">
-                      <span className="text-terracotta-500 font-bold shrink-0">✗</span>
+                      <SiteIcon name="close" className="mt-0.5 text-terracotta-500" />
                       <InclusionLine text={item} />
                     </li>
                   ))}
@@ -600,11 +601,11 @@ export default function TourDetailPage() {
           {/* Trust Guarantees */}
           <div className="bg-cream-100 rounded-2xl p-5 text-xs text-teal-800/80 space-y-2.5 border border-savanna-200">
             <div className="flex items-center gap-2">
-              <span className="text-base">💬</span>
+              <SiteIcon name="message" className="text-base text-teal-600" />
               <span>Local Arusha team replies within 24 hours</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-base">🔒</span>
+              <SiteIcon name="lock" className="text-base text-teal-600" />
               <span>Zero payment required until itinerary is finalized</span>
             </div>
           </div>

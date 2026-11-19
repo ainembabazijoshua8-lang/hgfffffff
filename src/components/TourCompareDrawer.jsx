@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useCurrency } from '../context/CurrencyContext.jsx';
+import { SiteIcon } from './Icons.jsx';
 
 export default function TourCompareDrawer({ selectedTours, onRemove, onClear }) {
   const { formatPrice } = useCurrency();
@@ -11,7 +12,7 @@ export default function TourCompareDrawer({ selectedTours, onRemove, onClear }) 
       <div className="container-x py-4">
         <div className="flex items-center justify-between pb-3 border-b border-teal-800/80 mb-3">
           <div className="flex items-center gap-2">
-            <span className="text-base sm:text-lg">⚖️</span>
+            <SiteIcon name="scale" className="text-base sm:text-lg text-terracotta-300" />
             <span className="font-display font-bold text-sm sm:text-base text-cream-50">
               Comparing Safari Packages ({selectedTours.length}/3)
             </span>
@@ -35,7 +36,7 @@ export default function TourCompareDrawer({ selectedTours, onRemove, onClear }) 
                 className="absolute top-2 right-2 w-6 h-6 rounded-full bg-teal-950/80 text-cream-100/70 hover:text-cream-50 flex items-center justify-center text-xs"
                 title="Remove from comparison"
               >
-                ✕
+                <SiteIcon name="close" />
               </button>
 
               <div>
@@ -49,7 +50,7 @@ export default function TourCompareDrawer({ selectedTours, onRemove, onClear }) 
                   From {formatPrice(tour.price_usd)} / person
                 </div>
                 <div className="text-[11px] text-cream-100/75 mt-1 line-clamp-1">
-                  📍 {tour.location}
+                  <SiteIcon name="map-pin" className="mr-1 align-[-2px]" />{tour.location}
                 </div>
               </div>
 

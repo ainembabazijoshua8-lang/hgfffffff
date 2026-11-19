@@ -113,23 +113,27 @@ export function routeLineLayer(activeLegId = null) {
     },
     paint: {
       'line-color': ['get', 'color'],
+      // `step` needs a numeric input; a boolean feature-state needs `case`.
+      // The old `step` form failed validation, so the routes layer never drew.
       'line-width': [
-        'step',
+        'case',
         ['boolean', ['feature-state', 'highlight'], false],
-        2, // default (inactive)
         5, // active
+        2, // default (inactive)
       ],
       'line-opacity': [
-        'step',
+        'case',
         ['boolean', ['feature-state', 'highlight'], false],
+        1.0, // active
         0.4, // inactive
-        1.0,  // active
       ],
+      // line-dasharray can depend on feature properties but not feature-state,
+      // so flown legs are always dashed and road legs solid.
       'line-dasharray': [
-        'step',
-        ['boolean', ['feature-state', 'highlight'], false],
-        ['match', ['get', 'mode'], 'fly', ['literal', [2, 2]], ['literal', []]],
-        ['literal', []],
+        'match',
+        ['get', 'mode'],
+        'fly', ['literal', [2, 2]],
+        ['literal', [1, 0]],
       ],
     },
   };

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fallbackTours as TOUR_CATALOG } from '../data/fallbackTours.js';
+import { SiteIcon } from './Icons.jsx';
 
 // Every animal points at a tour slug; the displayed name and price are derived
 // from the catalog rather than restated per animal. Restating them meant a price
@@ -19,7 +20,7 @@ const ANIMALS = [
     name: 'Lion',
     swahili: 'Simba',
     scientific: 'Panthera leo',
-    icon: '🦁',
+    icon: 'paw',
     likelihood: '98%',
     bestParks: ['Central Serengeti (Seronera)', 'Ngorongoro Crater', 'Ruaha (10% world pop)'],
     bestTime: 'Early morning & golden hour sundown',
@@ -34,7 +35,7 @@ const ANIMALS = [
     name: 'Leopard',
     swahili: 'Chui',
     scientific: 'Panthera pardus',
-    icon: '🐆',
+    icon: 'paw',
     likelihood: '85%',
     bestParks: ['Seronera River Valley (Serengeti)', 'Tarangire Baobab Trees'],
     bestTime: 'Early dawn, resting in sausage tree forks midday',
@@ -49,7 +50,7 @@ const ANIMALS = [
     name: 'Black Rhino',
     swahili: 'Faru',
     scientific: 'Diceros bicornis',
-    icon: '🦏',
+    icon: 'paw',
     likelihood: '92%',
     bestParks: ['Ngorongoro Crater floor', 'Mkomazi Rhino Sanctuary'],
     bestTime: 'Early morning near Lerai Forest & saline lake',
@@ -64,7 +65,7 @@ const ANIMALS = [
     name: 'African Elephant',
     swahili: 'Ndovu / Tembo',
     scientific: 'Loxodonta africana',
-    icon: '🐘',
+    icon: 'paw',
     likelihood: '99%',
     bestParks: ['Tarangire River Corridor', 'Central Serengeti', 'Ruaha National Park'],
     bestTime: 'All day; riverbeds during hot afternoons',
@@ -79,7 +80,7 @@ const ANIMALS = [
     name: 'Cape Buffalo',
     swahili: 'Nyati / Mbogo',
     scientific: 'Syncerus caffer',
-    icon: '🐃',
+    icon: 'paw',
     likelihood: '99%',
     bestParks: ['Ngorongoro Crater', 'Tarangire Marshlands', 'Nyerere (Selous)'],
     bestTime: 'Morning grazing & wallowing in waterholes',
@@ -100,7 +101,7 @@ const ANIMALS = [
     name: 'Cheetah',
     swahili: 'Duma',
     scientific: 'Acinonyx jubatus',
-    icon: '💨',
+    icon: 'paw',
     likelihood: '88%',
     bestParks: ['Southern Serengeti (Ndutu)', 'Grumeti Plains'],
     bestTime: 'Mid-morning & afternoon on termite mounds',
@@ -121,7 +122,7 @@ const ANIMALS = [
     name: 'African Wild Dog',
     swahili: 'Mbwa Mwitu',
     scientific: 'Lycaon pictus',
-    icon: '🐾',
+    icon: 'paw',
     likelihood: '75%',
     bestParks: ['Nyerere National Park (Selous)', 'Ruaha Untamed'],
     bestTime: 'Cool dawn and twilight pack hunts',
@@ -170,7 +171,7 @@ export default function BigFiveTracker() {
                   : 'bg-cream-50 text-teal-800 border border-savanna-200 hover:border-terracotta-400 hover:bg-cream-100'
               }`}
             >
-              <span className="text-base sm:text-lg">{animal.icon}</span>
+              <SiteIcon name={animal.icon} className="text-base sm:text-lg" />
               <span>{animal.name}</span>
             </button>
           );
@@ -205,7 +206,7 @@ export default function BigFiveTracker() {
             <div className="flex items-center justify-between gap-4 border-b border-savanna-200 pb-3">
               <div>
                 <h3 className="font-display text-2xl sm:text-3xl text-teal-800 font-bold flex items-center gap-2">
-                  <span>{activeAnimal.icon}</span>
+                  <SiteIcon name={activeAnimal.icon} className="text-terracotta-500" />
                   <span>{activeAnimal.name}</span>
                 </h3>
                 <span className="text-xs italic text-teal-600 font-serif">{activeAnimal.scientific}</span>
@@ -219,7 +220,7 @@ export default function BigFiveTracker() {
             <div className="mt-4 grid sm:grid-cols-2 gap-4 text-xs sm:text-sm text-teal-800">
               <div className="p-3 bg-cream-100/60 rounded-xl border border-savanna-200/50">
                 <span className="block font-bold text-[11px] uppercase tracking-wider text-terracotta-500 mb-1">
-                  📍 Prime Locations
+                  <SiteIcon name="map-pin" className="mr-1 align-[-2px]" />Prime Locations
                 </span>
                 <ul className="list-disc list-inside space-y-0.5 text-teal-700">
                   {activeAnimal.bestParks.map((p) => (
@@ -230,7 +231,7 @@ export default function BigFiveTracker() {
 
               <div className="p-3 bg-cream-100/60 rounded-xl border border-savanna-200/50">
                 <span className="block font-bold text-[11px] uppercase tracking-wider text-terracotta-500 mb-1">
-                  ⏱️ Peak Activity Hours
+                  <SiteIcon name="clock" className="mr-1 align-[-2px]" />Peak Activity Hours
                 </span>
                 <p className="text-teal-700">{activeAnimal.bestTime}</p>
                 <div className="mt-2 text-[11px] text-teal-600 font-medium">{activeAnimal.status}</div>
@@ -238,7 +239,7 @@ export default function BigFiveTracker() {
             </div>
 
             <div className="mt-4 p-3.5 bg-amber-50/60 border border-amber-200/60 rounded-xl text-xs sm:text-sm text-teal-900 leading-relaxed">
-              <span className="font-bold text-terracotta-500 mr-1.5">🧭 Field Tracker Insight:</span>
+              <span className="font-bold text-terracotta-500 mr-1.5"><SiteIcon name="compass" className="mr-1 align-[-2px]" />Field Tracker Insight:</span>
               {activeAnimal.fieldNote}
             </div>
           </div>
@@ -252,7 +253,7 @@ export default function BigFiveTracker() {
               to={`/tours/${activeAnimal.recommendedTourSlug}`}
               className="btn-primary py-2 px-4 text-xs font-semibold"
             >
-              View This Journey ➔
+              View This Journey <SiteIcon name="arrow-right" className="align-[-2px]" />
             </Link>
           </div>
         </div>

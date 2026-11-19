@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { SiteIcon } from '../components/Icons.jsx';
 
 export default function ThankYouPage() {
   const [params] = useSearchParams();
@@ -18,7 +19,7 @@ export default function ThankYouPage() {
       <div className="absolute inset-0 bg-hero-vignette opacity-50 mix-blend-multiply" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(201,104,61,0.15),transparent_50%)]" />
       <div className="container-x text-center max-w-2xl relative z-10 animate-slide-up">
-        <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-terracotta-400 to-terracotta-500 text-cream-50 flex items-center justify-center text-4xl mb-8 shadow-glow">✓</div>
+        <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-terracotta-400 to-terracotta-500 text-cream-50 flex items-center justify-center text-4xl mb-8 shadow-glow"><SiteIcon name="check" /></div>
         <h1 className="font-display text-4xl sm:text-5xl md:text-6xl drop-shadow-sm">Thank you — we got it.</h1>
         {ref && (
           <p className="mt-6 text-cream-50/90 text-lg">

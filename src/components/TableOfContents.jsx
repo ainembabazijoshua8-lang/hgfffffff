@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { SiteIcon } from './Icons.jsx';
 
 export default function TableOfContents({ sections, activeSection, onSectionClick }) {
   const [collapsed, setCollapsed] = useState(false);
@@ -22,7 +23,7 @@ export default function TableOfContents({ sections, activeSection, onSectionClic
       <div className="glass-card overflow-hidden rounded-2xl">
         <div className="flex items-center justify-between px-5 py-4 border-b border-cream-200">
           <h3 className="font-display text-lg text-teal-800 flex items-center gap-2">
-            <span aria-hidden="true">📖</span>
+            <SiteIcon name="book" className="text-terracotta-500" />
             On this page
           </h3>
           {isDesktop ? (

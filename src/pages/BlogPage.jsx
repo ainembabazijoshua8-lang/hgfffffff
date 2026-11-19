@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import BlogHeroBanner from '../components/BlogHeroBanner.jsx';
 import BlogFilterBar from '../components/BlogFilterBar.jsx';
 import BlogPostCard from '../components/BlogPostCard.jsx';
+import { SiteIcon } from '../components/Icons.jsx';
 
 const POSTS = [
   {
@@ -98,7 +99,7 @@ export default function BlogPage() {
 
         {filteredPosts.length === 0 ? (
           <div className="text-center py-16">
-            <div className="text-5xl mb-4">🔍</div>
+            <SiteIcon name="search" className="text-5xl mb-4 text-teal-500" />
             <h3 className="font-display text-2xl text-teal-800 mb-2">No articles found</h3>
             <p className="text-teal-700/70 mb-6">
               {searchQuery

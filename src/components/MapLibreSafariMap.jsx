@@ -8,6 +8,15 @@ import Map, {
   AttributionControl,
 } from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
+import { setWorkerUrl } from 'maplibre-gl';
+import { SiteIcon, iconMarkup } from './Icons.jsx';
+// MapLibre resolves its worker as ./maplibre-gl-worker.mjs next to its own
+// module. Once bundled that file is never emitted, so the request fell through
+// to index.html and every map failed with "Worker failed to load". Ship the
+// worker as a build asset and point MapLibre at it explicitly.
+import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
+
+setWorkerUrl(maplibreWorkerUrl);
 
 import {
   MAP_CATEGORIES,
@@ -66,9 +75,7 @@ function MapSkeleton() {
     >
       <div className="rounded-2xl bg-cream-200 min-h-[440px] sm:min-h-[500px] flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <span className="text-3xl animate-pulse" aria-hidden="true">
-            🗺️
-          </span>
+          <SiteIcon name="map" className="text-3xl text-teal-700 animate-pulse" />
           <p className="text-xs font-semibold uppercase tracking-wider text-teal-600">
             Loading safari map…
           </p>
@@ -272,8 +279,6 @@ export default function MapLibreSafariMap({
       if (disposed || mapInstanceRef.current) return;
       mapInstanceRef.current = mapInstance;
 
-      mapInstance.setFadeDuration(FADE_DURATION_MS);
-
       const canvas = mapInstance.getCanvas();
       const shell = canvas.parentElement;
 
@@ -470,23 +475,27 @@ export default function MapLibreSafariMap({
       layout: { 'line-cap': 'round', 'line-join': 'round' },
       paint: {
         'line-color': ['get', 'color'],
+        // `step` needs a numeric input; a boolean feature-state needs `case`.
+        // The old `step` form failed style validation, so routes never drew.
         'line-width': [
-          'step',
+          'case',
           ['boolean', ['feature-state', 'highlight'], false],
-          2,
           5,
+          2,
         ],
         'line-opacity': [
-          'step',
+          'case',
           ['boolean', ['feature-state', 'highlight'], false],
-          0.4,
           1.0,
+          0.4,
         ],
+        // line-dasharray supports feature properties but not feature-state:
+        // flown legs are dashed, road legs solid.
         'line-dasharray': [
-          'step',
-          ['boolean', ['feature-state', 'highlight'], false],
-          ['match', ['get', 'mode'], 'fly', ['literal', [2, 2]], ['literal', []]],
-          ['literal', []],
+          'match',
+          ['get', 'mode'],
+          'fly', ['literal', [2, 2]],
+          ['literal', [1, 0]],
         ],
       },
     }),
@@ -572,7 +581,7 @@ export default function MapLibreSafariMap({
       <div class="safari-pin" style="width:${size}px;height:${size}px">
         ${pulse}
         <span class="safari-pin__core relative z-10 flex items-center justify-center w-full h-full rounded-full shadow-lg border-2 ${face}">
-          <span style="font-size:${Math.round(size * 0.4)}px;line-height:1">${iconType}</span>
+          ${iconMarkup(iconType, { size: Math.round(size * 0.5), fallback: 'map-pin' })}
         </span>
         ${label ? `<span class="safari-pin__label">${label}</span>` : ''}
       </div>`;
@@ -730,6 +739,7 @@ export default function MapLibreSafariMap({
           id="maplibre-safari-map"
           mapStyle={styleUrl}
           styleDiffing={true}
+          fadeDuration={FADE_DURATION_MS}
           initialViewState={{
             longitude: DEFAULT_VIEW.center[1],
             latitude: DEFAULT_VIEW.center[0],
@@ -750,9 +760,11 @@ export default function MapLibreSafariMap({
           <Source
             id={ACTIVE_DEM.id}
             type="raster-dem"
-            url={ACTIVE_DEM.url}
+            tiles={ACTIVE_DEM.tiles}
             tileSize={ACTIVE_DEM.tileSize}
             maxzoom={ACTIVE_DEM.maxzoom}
+            encoding={ACTIVE_DEM.encoding}
+            attribution={ACTIVE_DEM.attribution}
           />
 
           {/* Routes as GeoJSON LineString with feature-state highlighting */}
@@ -790,7 +802,7 @@ export default function MapLibreSafariMap({
               aria-expanded={controlsOpen}
               aria-label="Map layers and filters"
             >
-              {failedLayers.length > 0 ? '⚠️ Layers' : '🗺️ Layers'}
+              <SiteIcon name={failedLayers.length > 0 ? 'alert' : 'layers'} className="mr-1 align-[-2px]" />Layers
             </button>
             <div className="safari-map-controls__body flex flex-wrap items-center gap-1">
               {AVAILABLE_VECTOR_STYLES.map(provider => {
@@ -809,7 +821,7 @@ export default function MapLibreSafariMap({
                         : 'text-teal-800 hover:bg-cream-100'
                     } ${isFailed ? 'opacity-50 line-through' : ''}`}
                   >
-                    <span aria-hidden="true">{provider.icon}</span>
+                    <SiteIcon name={provider.icon} />
                     <span className="hidden sm:inline">{provider.label}</span>
                   </button>
                 );
@@ -828,7 +840,7 @@ export default function MapLibreSafariMap({
                 }`}
                 title={terrainEnabled ? 'Disable 3D terrain' : 'Enable 3D terrain'}
               >
-                <span aria-hidden="true">🏔️</span>
+                <SiteIcon name="mountain" />
                 <span className="hidden sm:inline">Terrain</span>
               </button>
 
@@ -838,7 +850,7 @@ export default function MapLibreSafariMap({
                 className="p-1 rounded-lg text-xs text-teal-700 hover:bg-cream-100 transition border-l border-savanna-200 pl-2 ml-1"
                 title="Reset view"
               >
-                🔄 <span className="sr-only sm:not-sr-only">Reset</span>
+                <SiteIcon name="reset" className="align-[-2px]" /> <span className="sr-only sm:not-sr-only">Reset</span>
               </button>
             </div>
           </div>
@@ -861,9 +873,7 @@ export default function MapLibreSafariMap({
                     : 'text-teal-800 hover:bg-cream-100'
                 }`}
               >
-                <span aria-hidden="true" className="mr-1">
-                  {c.icon}
-                </span>
+                <SiteIcon name={c.icon} className="mr-1" />
                 {c.label}
                 <span
                   className={`ml-1 px-1.5 rounded-full text-[9px] font-bold tabular-nums ${
@@ -935,7 +945,7 @@ export default function MapLibreSafariMap({
                         setSearchOpen(false);
                       }}
                     >
-                      <span aria-hidden="true">{r.icon}</span>
+                      <SiteIcon name={r.icon} className="mt-0.5" />
                       <span className="min-w-0">
                         <span className="block font-semibold truncate">{r.title}</span>
                         <span className="block text-[10px] text-teal-500 truncate">
@@ -993,7 +1003,7 @@ export default function MapLibreSafariMap({
         {category === 'habitats' ? (
           <div className="safari-map-overlay safari-map-overlay--bl safari-map-panel px-3 py-2 max-w-[16rem]">
             <div className="text-[10px] font-bold uppercase tracking-wider text-teal-500 mb-1">
-              {activeHabitat.iconType} {activeHabitat.name} · {activeHabitat.status}
+              <SiteIcon name={activeHabitat.iconType} className="mr-1 align-[-2px]" />{activeHabitat.name} · {activeHabitat.status}
             </div>
             <p className="text-[11px] leading-relaxed text-teal-700/90">{activeHabitat.summary}</p>
             <p className="mt-1.5 text-[9px] uppercase tracking-wider text-teal-400">
@@ -1018,7 +1028,7 @@ export default function MapLibreSafariMap({
                         : 'text-cream-100/90 hover:bg-teal-800/80'
                     }`}
                   >
-                    <span aria-hidden="true">{location.iconType}</span>
+                    <SiteIcon name={location.iconType} />
                     <span>{location.shortName}</span>
                   </button>
                 ))
@@ -1035,7 +1045,7 @@ export default function MapLibreSafariMap({
                           : 'text-cream-100/90 hover:bg-teal-800/80'
                       }`}
                     >
-                      <span aria-hidden="true">{h.iconType}</span>
+                      <SiteIcon name={h.iconType} />
                       <span>{h.name}</span>
                     </button>
                   ))
@@ -1055,7 +1065,7 @@ export default function MapLibreSafariMap({
                           : 'text-cream-100/90 hover:bg-teal-800/80'
                       }`}
                     >
-                      <span aria-hidden="true">{a.iconType}</span>
+                      <SiteIcon name={a.iconType} />
                       <span>{a.name}</span>
                     </button>
                   ))}
@@ -1065,9 +1075,7 @@ export default function MapLibreSafariMap({
         {/* Loading state overlay */}
         {status === 'loading' ? (
           <div className="safari-map-state">
-            <span className="text-3xl animate-pulse" aria-hidden="true">
-              🗺️
-            </span>
+            <SiteIcon name="map" className="text-3xl text-teal-700 animate-pulse" />
             <p className="text-xs font-semibold uppercase tracking-wider text-teal-600">
               Loading map…
             </p>
@@ -1077,9 +1085,7 @@ export default function MapLibreSafariMap({
         {/* Error state overlay */}
         {status === 'error' ? (
           <div className="safari-map-state">
-            <span className="text-3xl" aria-hidden="true">
-              🛰️
-            </span>
+            <SiteIcon name="alert" className="text-3xl text-teal-700" />
             <p className="font-display text-lg text-teal-800">Map unavailable</p>
             <p className="text-xs text-teal-700/80 max-w-sm">
               MapLibre GL could not initialise. Check your WebGL support and
@@ -1103,7 +1109,7 @@ export default function MapLibreSafariMap({
               role="status"
               aria-live="polite"
             >
-              <span aria-hidden="true">⚠️</span>
+              <SiteIcon name="alert" className="mt-0.5 text-terracotta-500" />
               <p className="text-[11px] text-teal-800 leading-snug">{notice}</p>
               <button
                 type="button"
@@ -1111,7 +1117,7 @@ export default function MapLibreSafariMap({
                 className="ml-auto text-teal-500 hover:text-teal-800 text-xs leading-none px-1"
                 aria-label="Dismiss map notice"
               >
-                ✕
+                <SiteIcon name="close" />
               </button>
             </div>
           </div>
@@ -1133,7 +1139,7 @@ export default function MapLibreSafariMap({
         {category === 'habitats' ? (
           <div className="mb-4" style={{ borderLeft: `4px solid ${activeHabitat.color}`, paddingLeft: 12 }}>
             <h4 className="font-display text-sm font-bold text-teal-900 mb-1.5">
-              {activeHabitat.iconType} {activeHabitat.name}
+              <SiteIcon name={activeHabitat.iconType} className="mr-1.5 align-[-2px]" />{activeHabitat.name}
             </h4>
             <p className="text-[11px] leading-relaxed text-teal-700/90">{activeHabitat.summary}</p>
             <div className="mt-2 flex flex-wrap gap-1.5">
@@ -1152,7 +1158,7 @@ export default function MapLibreSafariMap({
         {category === 'activities' && activeActivityId ? (
           <div className="mb-4" style={{ borderLeft: '4px solid #2A7B88', paddingLeft: 12 }}>
             <h4 className="font-display text-sm font-bold text-teal-900 mb-1.5">
-              {MAP_ACTIVITIES.find(a => a.id === activeActivityId)?.iconType}{' '}
+              <SiteIcon name={MAP_ACTIVITIES.find(a => a.id === activeActivityId)?.iconType} className="mr-1.5 align-[-2px]" />
               {MAP_ACTIVITIES.find(a => a.id === activeActivityId)?.name}
             </h4>
             <p className="text-[11px] leading-relaxed text-teal-700/90">
@@ -1197,19 +1203,19 @@ export default function MapLibreSafariMap({
             </div>
             <dl className="space-y-2 text-xs text-teal-700/90 bg-cream-100/70 p-3.5 rounded-xl border border-savanna-100">
               <div className="flex items-start gap-2">
-                <dt className="shrink-0">🗓️</dt>
+                <dt className="shrink-0 mt-0.5"><SiteIcon name="calendar" /></dt>
                 <dd>
                   <strong>Best time:</strong> {activeLocation.bestMonths}
                 </dd>
               </div>
               <div className="flex items-start gap-2">
-                <dt className="shrink-0">🚙</dt>
+                <dt className="shrink-0 mt-0.5"><SiteIcon name="car" /></dt>
                 <dd>
                   <strong>Transit:</strong> {activeLocation.transit}
                 </dd>
               </div>
               <div className="flex items-start gap-2">
-                <dt className="shrink-0">🌄</dt>
+                <dt className="shrink-0 mt-0.5"><SiteIcon name="mountain" /></dt>
                 <dd>
                   <strong>Landscape:</strong> {activeLocation.terrain}
                 </dd>
@@ -1259,7 +1265,7 @@ export default function MapLibreSafariMap({
                 }
                 className="bg-[#25D366] hover:bg-[#1EBE5D] text-white py-2.5 px-3 rounded-full text-xs font-semibold transition flex items-center justify-center gap-1.5"
               >
-                <span aria-hidden="true">💬</span> WhatsApp Inquire
+                <SiteIcon name="whatsapp" /> WhatsApp Inquire
               </button>
             </div>
           </div>

@@ -8,7 +8,7 @@
  *
  * The two focal landmarks — Ngorongoro Crater (−3.24, 35.48) and Mount
  * Kilimanjaro (−3.07, 37.36) — both fall under the global coverage of the
- * MapTiler terrain service and the AWS OpenData Copernicus DEM, so a single
+ * MapTiler terrain service and the AWS Open Data terrain tiles, so a single
  * DEM source covers both.
  *
  * Terrain is enabled/disabled at runtime via `setTerrain({ source, exaggeration })`
@@ -33,50 +33,57 @@ function mtTileUrl(path) {
 /**
  * Elevation sources. All use RGB-encoded raster DEM tiles.
  *
- * - `maptiler`: Global coverage at zoom 0–10, terrarium encoding.
- *   Best for Ngorongoro Crater and Mount Kilimanjaro. Requires a MapTiler key.
- *   Tile URL: https://api.maplibre.org/.../{z}/{x}/{y}.png (placeholder)
- *   In production: https://api.maptiler.com/tiles/terrain-rgb/{z}/{x}/{y}.png?key=...
+ * - `maptiler`: MapTiler terrain-rgb, mapbox encoding. Requires VITE_MAPTILER_KEY;
+ *   without it this entry falls back to the open tiles below.
  *
- * - `copernicus`: AWS OpenData, 30 m resolution, terrarium encoding.
- *   No API key required. Coverage: global.
- *   URL: https://s3.eu-central-1.amazonaws.com/...
- *
- * - `srtm`: NASA SRTM 1-arc-second (~30 m), mapbox encoding. Legacy but free.
+ * - `openTerrain`: AWS Open Data Terrain Tiles, terrarium encoding, global.
+ *   No API key required.
  */
+// Free, key-less elevation tiles (AWS Open Data "Terrain Tiles", terrarium
+// encoding, global, CORS-enabled). Replaces a Copernicus "sentinel-cogs" URL that
+// was not a tile endpoint at all and failed CORS on every request. Declared
+// before DEM_SOURCES so the MapTiler entry can fall back to it without reading
+// DEM_SOURCES inside its own initializer (which threw with no MapTiler key).
+const OPEN_TERRAIN_TILES = 'https://elevation-tiles-prod.s3.amazonaws.com/terrarium/{z}/{x}/{y}.png';
+
+// Each entry is a MapLibre raster-dem source spec plus an `id`. Tile templates
+// go in `tiles`; `url` would be read as a TileJSON document address.
 export const DEM_SOURCES = {
   maptiler: {
     id: 'dem',
     type: 'raster-dem',
-    url: MAPTILER_KEY
+    tiles: [MAPTILER_KEY
       ? `https://api.maptiler.com/tiles/terrain-rgb/{z}/{x}/{y}.png?key=${encodeURIComponent(MAPTILER_KEY)}`
-      : DEM_SOURCES.copernicus.url,
+      : OPEN_TERRAIN_TILES],
     tileSize: 256,
-    maxzoom: 14,
-    encoding: DEM_ENCODING.MAPIMAP,
-    attribution:
-      MAPTILER_KEY
-        ? '© <a href="https://www.maptiler.com/">MapTiler</a> © <a href="https://www.euvs.esoc.esa.int/">ESA/Copernicus</a>'
-        : 'Demo DEM — set VITE_MAPTILER_KEY for production terrain',
+    maxzoom: MAPTILER_KEY ? 14 : 15,
+    encoding: MAPTILER_KEY ? DEM_ENCODING.MAPIMAP : DEM_ENCODING.TERRARIUM,
+    attribution: MAPTILER_KEY
+      ? '© <a href="https://www.maptiler.com/">MapTiler</a>'
+      : 'Terrain: <a href="https://registry.opendata.aws/terrain-tiles/">AWS Terrain Tiles</a>',
   },
-  copernicus: {
+  openTerrain: {
     id: 'dem',
     type: 'raster-dem',
-    url:
-      'https://s3.eu-central-1.amazonaws.com/sentinel-cogs/copernicus-dem-30/{z}/{x}/{y}.png',
+    tiles: [OPEN_TERRAIN_TILES],
     tileSize: 256,
-    maxzoom: 12,
+    maxzoom: 15,
     encoding: DEM_ENCODING.TERRARIUM,
-    attribution:
-      '© <a href="https://sentinel.esa.int/">ESA</a> (Copernicus Sentinel-3 L2, DEM 30m)',
+    attribution: 'Terrain: <a href="https://registry.opendata.aws/terrain-tiles/">AWS Terrain Tiles</a>',
   },
 };
 
+/** The source spec MapLibre accepts: everything except our `id` key. */
+export function demSourceSpec(dem = ACTIVE_DEM) {
+  const { id: _id, ...spec } = dem;
+  return spec;
+}
+
 /**
- * Default active DEM source. Uses MapTiler with a fallback to Copernicus
+ * Default active DEM source. Uses MapTiler with a fallback to AWS terrain tiles
  * (no key required) when VITE_MAPTILER_KEY is absent.
  */
-export const ACTIVE_DEM = MAPTILER_KEY ? DEM_SOURCES.maptiler : DEM_SOURCES.copernicus;
+export const ACTIVE_DEM = MAPTILER_KEY ? DEM_SOURCES.maptiler : DEM_SOURCES.openTerrain;
 
 /**
  * Per-region terrain exaggeration settings.
@@ -138,7 +145,7 @@ export function applyTerrain(map, opts) {
   }
 
   if (!map.getSource(opts.demSource)) {
-    map.addSource(opts.demSource, ACTIVE_DEM);
+    map.addSource(opts.demSource, demSourceSpec());
   }
 
   map.setTerrain({

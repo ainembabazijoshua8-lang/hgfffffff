@@ -42,7 +42,7 @@ export function buildSearchIndex(locations, activities, wildlife = []) {
     entries.push({
       id: w.id,
       kind: 'Wildlife',
-      icon: '🦌',
+      icon: 'paw',
       title: w.name,
       subtitle: w.habitat || '',
       haystack: [w.name, w.habitat].filter(Boolean).join(' ').toLowerCase(),

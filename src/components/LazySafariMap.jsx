@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import MapErrorBoundary from './MapErrorBoundary.jsx';
+import { SiteIcon } from './Icons.jsx';
 
 const SafariMap = lazy(() => import('./MapLibreSafariMap.jsx'));
 
@@ -11,7 +12,7 @@ function MapSkeleton() {
     >
       <div className="rounded-2xl bg-cream-200 min-h-[440px] sm:min-h-[500px] flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <span className="text-3xl animate-pulse">🗺️</span>
+          <SiteIcon name="map" className="text-3xl text-teal-700 animate-pulse" />
           <p className="text-xs font-semibold uppercase tracking-wider text-teal-600">
             Loading safari map…
           </p>

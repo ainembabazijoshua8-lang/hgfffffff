@@ -9,13 +9,13 @@
  *   lat/lng   number  WGS84 decimal degrees
  *   name      string  full display name
  *   category  string  one of MAP_CATEGORIES[].id
- *   iconType  string  emoji glyph used by the custom divIcon marker
+ *   iconType  string  icon name from src/components/Icons.jsx, drawn on the marker
  */
 
 export const MAP_CATEGORIES = [
-  { id: 'places', label: 'Places', icon: '📍' },
-  { id: 'habitats', label: 'Habitats', icon: '🐾' },
-  { id: 'activities', label: 'Activities', icon: '🎈' },
+  { id: 'places', label: 'Places', icon: 'map-pin' },
+  { id: 'habitats', label: 'Habitats', icon: 'paw' },
+  { id: 'activities', label: 'Activities', icon: 'balloon' },
 ];
 
 export const MAP_CIRCUITS = [
@@ -34,7 +34,7 @@ export const MAP_LOCATIONS = [
     lat: -2.3333,
     lng: 34.8333,
     category: 'places',
-    iconType: '🦁',
+    iconType: 'paw',
     shortName: 'Serengeti',
     subtitle: 'Endless Plains & Great Migration',
     badge: 'World #1 Park',
@@ -42,7 +42,7 @@ export const MAP_LOCATIONS = [
     circuit: 'northern',
     tourQuery: 'Serengeti',
     image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80',
-    animals: ['🦁 Lions', '🐆 Leopards', '🦓 Great Migration', '🐘 Elephants', '🦏 Black Rhino'],
+    animals: ['Lions', 'Leopards', 'Great Migration', 'Elephants', 'Black Rhino'],
     highlights:
       'Voted Africa’s leading national park, with the highest predator density on earth and the world-famous wildebeest migration.',
     bestMonths: 'Year-round (Jan–Mar calving; Jul–Oct Mara River crossings)',
@@ -56,7 +56,7 @@ export const MAP_LOCATIONS = [
     lat: -3.24,
     lng: 35.48,
     category: 'places',
-    iconType: '🦏',
+    iconType: 'paw',
     shortName: 'Ngorongoro',
     subtitle: 'World Heritage Volcanic Caldera',
     badge: 'UNESCO Wonder',
@@ -64,7 +64,7 @@ export const MAP_LOCATIONS = [
     circuit: 'northern',
     tourQuery: 'Ngorongoro',
     image: 'https://images.unsplash.com/photo-1534177616072-ef7dc120449d?auto=format&fit=crop&w=800&q=80',
-    animals: ['🦏 Black Rhino', '🦁 Crater Lions', '🦩 Flamingos', '🦛 Hippos', '🐃 Cape Buffalo'],
+    animals: ['Black Rhino', 'Crater Lions', 'Flamingos', 'Hippos', 'Cape Buffalo'],
     highlights:
       'The world’s largest intact volcanic caldera, 600m deep, holding 25,000+ large mammals in an enclosed amphitheater.',
     bestMonths: 'Year-round exceptional viewing with resident wildlife',
@@ -78,7 +78,7 @@ export const MAP_LOCATIONS = [
     lat: -3.8333,
     lng: 36.0,
     category: 'places',
-    iconType: '🐘',
+    iconType: 'paw',
     shortName: 'Tarangire',
     subtitle: 'Elephant Sanctuary & Ancient Baobabs',
     badge: 'Elephant Capital',
@@ -86,7 +86,7 @@ export const MAP_LOCATIONS = [
     circuit: 'northern',
     tourQuery: 'Tarangire',
     image: 'https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&w=800&q=80',
-    animals: ['🐘 Elephant Herds (up to 300)', '🦁 Tree-climbing Lions', '🐆 Leopards', '🦒 Giraffes', '🦜 550+ Bird Species'],
+    animals: ['Elephant Herds (up to 300)', 'Tree-climbing Lions', 'Leopards', 'Giraffes', '550+ Bird Species'],
     highlights:
       'Massive elephant family herds and thousand-year-old baobabs along the Tarangire River corridor.',
     bestMonths: 'June to October (peak dry-season river congregation)',
@@ -100,7 +100,7 @@ export const MAP_LOCATIONS = [
     lat: -3.6,
     lng: 35.8,
     category: 'places',
-    iconType: '🦩',
+    iconType: 'bird',
     shortName: 'Manyara',
     subtitle: 'Flamingo Alkaline Lake & Ground-water Forest',
     badge: 'Scenic Rift Valley',
@@ -108,7 +108,7 @@ export const MAP_LOCATIONS = [
     circuit: 'northern',
     tourQuery: 'Manyara',
     image: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=800&q=80',
-    animals: ['🦩 Pink Flamingos', '🦁 Tree-climbing Lions', '🐒 Baboon Troops', '🦛 Hippos', '🐘 Elephants'],
+    animals: ['Pink Flamingos', 'Tree-climbing Lions', 'Baboon Troops', 'Hippos', 'Elephants'],
     highlights:
       'Hemingway called it "the loveliest I had seen in Africa" — a Rift Valley escarpment backdrop with lush mahogany canopy.',
     bestMonths: 'Nov–May birding and waterfalls / Jun–Oct large mammals',
@@ -122,7 +122,7 @@ export const MAP_LOCATIONS = [
     lat: -3.3869,
     lng: 36.683,
     category: 'places',
-    iconType: '🌿',
+    iconType: 'leaf',
     shortName: 'Arusha',
     subtitle: 'Safari Capital & Starting Gateway',
     badge: 'Safari Hub',
@@ -130,7 +130,7 @@ export const MAP_LOCATIONS = [
     circuit: 'northern',
     tourQuery: 'Arusha',
     image: 'https://images.unsplash.com/photo-1528728329032-2972f65dfb3f?auto=format&fit=crop&w=800&q=80',
-    animals: ['🐒 Black-and-white Colobus', '🦒 Giraffes', '🦓 Zebras', '🦩 Momella Flamingos'],
+    animals: ['Black-and-white Colobus', 'Giraffes', 'Zebras', 'Momella Flamingos'],
     highlights:
       'The safari capital of East Africa and the base for northern circuit tours, with coffee estates and Mount Meru (4,562m).',
     bestMonths: 'Year-round departure hub',
@@ -144,7 +144,7 @@ export const MAP_LOCATIONS = [
     lat: -3.0674,
     lng: 37.3556,
     category: 'places',
-    iconType: '🏔️',
+    iconType: 'mountain',
     shortName: 'Kilimanjaro',
     subtitle: 'Roof of Africa (5,895m / 19,341ft)',
     badge: 'Highest Peak in Africa',
@@ -152,7 +152,7 @@ export const MAP_LOCATIONS = [
     circuit: 'northern',
     tourQuery: 'Kilimanjaro',
     image: 'https://images.unsplash.com/photo-1589553416260-f586c8f1514f?auto=format&fit=crop&w=800&q=80',
-    animals: ['🐒 Blue Monkeys', '🦅 Verreaux’s Eagles', '🌿 Giant Senecios & Lobelias'],
+    animals: ['Blue Monkeys', 'Verreaux’s Eagles', 'Giant Senecios & Lobelias'],
     highlights:
       'The highest freestanding mountain on earth, crossing five climate zones from rainforest to arctic summit glaciers.',
     bestMonths: 'Dec–Mar and Jul–Oct (clearest trekking skies)',
@@ -166,7 +166,7 @@ export const MAP_LOCATIONS = [
     lat: -1.49,
     lng: 35.1438,
     category: 'places',
-    iconType: '🐆',
+    iconType: 'paw',
     shortName: 'Maasai Mara',
     subtitle: 'Kenya’s Wildlife Crown Jewel',
     badge: 'Kenya Classic',
@@ -174,7 +174,7 @@ export const MAP_LOCATIONS = [
     circuit: 'kenya',
     tourQuery: null,
     image: 'https://images.unsplash.com/photo-1549366021-9f761d450615?auto=format&fit=crop&w=800&q=80',
-    animals: ['🦁 Marsh Pride Lions', '🐊 Mara River Crocodiles', '🐆 Cheetah Coalisations', '🦓 Migration Crossing'],
+    animals: ['Marsh Pride Lions', 'Mara River Crocodiles', 'Cheetah Coalisations', 'Migration Crossing'],
     highlights:
       'The northern extension of the Serengeti ecosystem, famous for Mara River crossings and dense cheetah territory.',
     bestMonths: 'July to October (Great Migration in Kenya)',
@@ -188,7 +188,7 @@ export const MAP_LOCATIONS = [
     lat: -2.6527,
     lng: 37.2606,
     category: 'places',
-    iconType: '🐘',
+    iconType: 'paw',
     shortName: 'Amboseli',
     subtitle: 'Land of Giants Under Kilimanjaro',
     badge: 'Postcard Views',
@@ -201,7 +201,7 @@ export const MAP_LOCATIONS = [
     license: 'CC BY-SA 3.0',
     licenseUrl:
       'https://commons.wikimedia.org/wiki/File:Elephants_at_Amboseli_national_park_against_Mount_Kilimanjaro.jpg',
-    animals: ['🐘 Big Tusker Elephants', '🦁 Lions', '🐆 Cheetahs', '🦩 Lake Amboseli Pelicans'],
+    animals: ['Big Tusker Elephants', 'Lions', 'Cheetahs', 'Lake Amboseli Pelicans'],
     highlights:
       'Enormous "Big Tusker" herds grazing against the snow-capped summit of Kilimanjaro.',
     bestMonths: 'June to October and January to February',
@@ -215,7 +215,7 @@ export const MAP_LOCATIONS = [
     lat: -6.1659,
     lng: 39.2026,
     category: 'places',
-    iconType: '🏝️',
+    iconType: 'palm',
     shortName: 'Zanzibar',
     subtitle: 'Spice Island & Stone Town Heritage',
     badge: 'Beach & Culture',
@@ -223,7 +223,7 @@ export const MAP_LOCATIONS = [
     circuit: 'coastal',
     tourQuery: 'Zanzibar',
     image: 'https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?auto=format&fit=crop&w=800&q=80',
-    animals: ['🐬 Spinner Dolphins', '🐢 Aldabra Tortoises', '🐠 Coral Reef Fish', '🐒 Red Colobus'],
+    animals: ['Spinner Dolphins', 'Aldabra Tortoises', 'Coral Reef Fish', 'Red Colobus'],
     highlights:
       'The post-safari paradise: white sand beaches, turquoise lagoons, spice plantations and historic Stone Town alleys.',
     bestMonths: 'Year-round (dry sun Jun–Oct and Dec–Feb)',
@@ -237,7 +237,7 @@ export const MAP_LOCATIONS = [
     lat: -7.7,
     lng: 38.05,
     category: 'places',
-    iconType: '🐘',
+    iconType: 'paw',
     shortName: 'Nyerere',
     subtitle: 'Selous Wilderness & Rufiji Floodplain',
     badge: 'Africa’s Largest Reserve',
@@ -249,7 +249,7 @@ export const MAP_LOCATIONS = [
     credit: 'Rwebogora',
     license: 'CC BY-SA 4.0',
     licenseUrl: 'https://commons.wikimedia.org/wiki/File:Giraffe_at_Nyerere_National_Park.jpg',
-    animals: ['🐘 Large Elephant herds', '🐆 Leopard', '🦁 Lion', '🐕 Wild Dog', '🦩 Rufiji flamingos'],
+    animals: ['Large Elephant herds', 'Leopard', 'Lion', 'Wild Dog', 'Rufiji flamingos'],
     highlights:
       'Formerly Selous — the largest protected area in Africa, roughly three times the size of the Serengeti, with one of the healthiest elephant populations on the continent.',
     bestMonths: 'June to October; wildlife concentrates along the rivers',
@@ -263,7 +263,7 @@ export const MAP_LOCATIONS = [
     lat: -7.9,
     lng: 34.9,
     category: 'places',
-    iconType: '🌳',
+    iconType: 'tree',
     shortName: 'Ruaha',
     subtitle: 'Baobabs, Giraffes & Great Ruaha Gorges',
     badge: 'Baobab Country',
@@ -275,7 +275,7 @@ export const MAP_LOCATIONS = [
     credit: 'PJvanErp',
     license: 'CC BY-SA 2.5',
     licenseUrl: 'https://commons.wikimedia.org/wiki/File:Ruaha_National_Park_Panorama.jpg',
-    animals: ['🦒 Giraffe (rare elsewhere)', '🐘 Elephants', '🐆 Leopard', '🦁 Lion', '🌳 Giant baobabs'],
+    animals: ['Giraffe (rare elsewhere)', 'Elephants', 'Leopard', 'Lion', 'Giant baobabs'],
     highlights:
       'Tanzania’s best-kept secret, with huge giraffe and elephant numbers along the Great Ruaha River and baobab-studded plains.',
     bestMonths: 'June to October; wildlife gathers along the Great Ruaha',
@@ -304,7 +304,7 @@ export const MAP_HABITATS = [
   {
     id: 'black-rhino',
     name: 'Black Rhino',
-    iconType: '🦏',
+    iconType: 'paw',
     color: '#4A4A4A',
     status: 'Critically endangered',
     summary:
@@ -317,7 +317,7 @@ export const MAP_HABITATS = [
   {
     id: 'elephant',
     name: 'African Elephant',
-    iconType: '🐘',
+    iconType: 'paw',
     color: '#8A5A36',
     status: 'Endangered',
     summary:
@@ -331,7 +331,7 @@ export const MAP_HABITATS = [
   {
     id: 'lion',
     name: 'Lion',
-    iconType: '🦁',
+    iconType: 'paw',
     color: '#C9683D',
     status: 'Vulnerable',
     summary:
@@ -346,7 +346,7 @@ export const MAP_HABITATS = [
   {
     id: 'leopard',
     name: 'Leopard',
-    iconType: '🐆',
+    iconType: 'paw',
     color: '#8A5A36',
     status: 'Vulnerable',
     summary:
@@ -360,7 +360,7 @@ export const MAP_HABITATS = [
   {
     id: 'wild-dog',
     name: 'African Wild Dog',
-    iconType: '🐕',
+    iconType: 'paw',
     color: '#B85D38',
     status: 'Endangered',
     summary:
@@ -374,7 +374,7 @@ export const MAP_HABITATS = [
   {
     id: 'migration',
     name: 'Great Migration',
-    iconType: '🦓',
+    iconType: 'paw',
     color: '#C9683D',
     status: 'Seasonal',
     summary:
@@ -388,7 +388,7 @@ export const MAP_HABITATS = [
   {
     id: 'cheetah',
     name: 'Cheetah',
-    iconType: '🐆',
+    iconType: 'paw',
     color: '#4A5D5A',
     status: 'Vulnerable',
     summary:
@@ -408,7 +408,7 @@ export const MAP_ACTIVITIES = [
     lat: -2.6,
     lng: 34.82,
     category: 'activities',
-    iconType: '🎈',
+    iconType: 'balloon',
     color: '#C9683D',
     parkId: 'serengeti',
     detail: 'Dawn launch over the short-grass plains, followed by a bush breakfast and a landing “surprise”.',
@@ -419,7 +419,7 @@ export const MAP_ACTIVITIES = [
     lat: -3.19,
     lng: 35.54,
     category: 'activities',
-    iconType: '🌅',
+    iconType: 'sunset',
     color: '#3B4749',
     parkId: 'ngorongoro',
     detail: 'Early descent to the crater floor to be on the plain when wildlife wakes, ahead of the day game drives.',
@@ -430,7 +430,7 @@ export const MAP_ACTIVITIES = [
     lat: -3.6,
     lng: 35.8,
     category: 'activities',
-    iconType: '🌳',
+    iconType: 'tree',
     color: '#8A5A36',
     parkId: 'lake-manyara',
     detail: 'A defining Manyara and Tarangire experience — big cats resting high in the mahogany and acacia canopy.',
@@ -441,7 +441,7 @@ export const MAP_ACTIVITIES = [
     lat: -3.75,
     lng: 36.05,
     category: 'activities',
-    iconType: '🌙',
+    iconType: 'moon',
     color: '#26332F',
     parkId: 'tarangire',
     detail: 'Spotlighting for genet, civet, aardvark and hunting leopard after dark. Not permitted inside the Ngorongoro Crater.',
@@ -452,7 +452,7 @@ export const MAP_ACTIVITIES = [
     lat: -3.29,
     lng: 35.51,
     category: 'activities',
-    iconType: '🪘',
+    iconType: 'drum',
     color: '#B85D38',
     parkId: 'ngorongoro',
     detail: 'A hosted visit to a boma beside the crater rim, with a walk-through of the enclosures and livestock traditions.',
@@ -463,7 +463,7 @@ export const MAP_ACTIVITIES = [
     lat: -1.5,
     lng: 35.0,
     category: 'activities',
-    iconType: '🌊',
+    iconType: 'waves',
     color: '#2A7B88',
     parkId: 'maasai-mara',
     detail: 'July–October is the window for wildebeest pouring across the Mara River, with crocodile waits and a relentless game drive.',
@@ -474,7 +474,7 @@ export const MAP_ACTIVITIES = [
     lat: -3.15,
     lng: 37.42,
     category: 'activities',
-    iconType: '🎒',
+    iconType: 'backpack',
     color: '#4A5D5A',
     parkId: 'kilimanjaro',
     detail: 'Trailheads at Marangu, Machame and Lemosho sit within a few hours of Arusha, usually paired with a short northern safari.',
@@ -485,7 +485,7 @@ export const MAP_ACTIVITIES = [
     lat: -3.53,
     lng: 35.82,
     category: 'activities',
-    iconType: '🦜',
+    iconType: 'bird',
     color: '#4A5D5A',
     parkId: 'lake-manyara',
     detail: 'The Rift Valley lake and its ground-water forest draw a rich mix of Rift Valley and coastal species.',
@@ -496,7 +496,7 @@ export const MAP_ACTIVITIES = [
     lat: -6.162,
     lng: 39.189,
     category: 'activities',
-    iconType: '🕌',
+    iconType: 'landmark',
     color: '#2A7B88',
     parkId: 'zanzibar',
     detail: 'A guided walk through the old Arab quarter, the old slave-market site, the fort and the Sultan’s Palace.',
@@ -507,7 +507,7 @@ export const MAP_ACTIVITIES = [
     lat: -6.45,
     lng: 39.5,
     category: 'activities',
-    iconType: '🐬',
+    iconType: 'fish',
     color: '#2A7B88',
     parkId: 'zanzibar',
     detail: 'South-east Zanzibar waters are the reliable place to swim with spinner dolphins and see the reef from a dhow.',

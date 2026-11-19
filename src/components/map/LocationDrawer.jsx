@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { WHATSAPP_NUMBER } from '../../data/mapData.js';
 import { attributionFor, photosForLocation } from '../../utils/galleryPhotos.js';
+import { SiteIcon } from '../Icons.jsx';
 
 /**
  * Portaled location detail drawer.
@@ -23,7 +24,7 @@ function seasonalBar(months) {
   // than showing the operator's own wording.
   return (
     <div className="flex items-start gap-2 text-xs text-teal-800">
-      <span aria-hidden="true">🗓️</span>
+      <SiteIcon name="calendar" className="mt-0.5" />
       <span>
         <strong>Best time:</strong> {months}
       </span>
@@ -75,7 +76,7 @@ export default function SafariMapDrawer({ location, open, isMobile, onClose, onP
           className="absolute top-3 right-3 w-8 h-8 rounded-full bg-cream-50/90 text-teal-900 flex items-center justify-center hover:bg-white transition"
           aria-label="Close location details"
         >
-          ✕
+          <SiteIcon name="close" />
         </button>
         <div className="absolute bottom-2 left-3 right-3 flex items-end justify-between gap-2">
           <div className="min-w-0">
@@ -112,17 +113,17 @@ export default function SafariMapDrawer({ location, open, isMobile, onClose, onP
 
         <dl className="space-y-2 text-xs text-teal-800 bg-cream-100/70 p-3 rounded-xl border border-savanna-100">
           <div className="flex items-start gap-2">
-            <dt aria-hidden="true">🗓️</dt>
+            <dt aria-hidden="true" className="mt-0.5"><SiteIcon name="calendar" /></dt>
             <dd>{seasonalBar(location.bestMonths)}</dd>
           </div>
           <div className="flex items-start gap-2">
-            <dt aria-hidden="true">🚙</dt>
+            <dt aria-hidden="true" className="mt-0.5"><SiteIcon name="car" /></dt>
             <dd>
               <strong>Transit:</strong> {location.transit}
             </dd>
           </div>
           <div className="flex items-start gap-2">
-            <dt aria-hidden="true">🌄</dt>
+            <dt aria-hidden="true" className="mt-0.5"><SiteIcon name="mountain" /></dt>
             <dd>
               <strong>Landscape:</strong> {location.terrain}
             </dd>
@@ -179,7 +180,7 @@ export default function SafariMapDrawer({ location, open, isMobile, onClose, onP
             rel="noreferrer noopener"
             className="bg-[#25D366] hover:bg-[#1EBE5D] text-white py-2.5 px-3 rounded-full text-xs font-semibold transition text-center"
           >
-            💬 WhatsApp
+            <SiteIcon name="whatsapp" className="mr-1.5 align-[-2px]" />WhatsApp
           </a>
           <a
             href={`/tours?q=${encodeURIComponent(location.tourQuery || location.name)}`}

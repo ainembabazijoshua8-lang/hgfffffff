@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { SiteIcon } from '../components/Icons.jsx';
 
 const TEAM = [
   {
@@ -203,9 +204,9 @@ export default function AboutPage() {
             <div className="rounded-2xl border border-cream-50/20 bg-white/10 p-7 backdrop-blur-sm">
               <div className="text-xs font-semibold uppercase tracking-[0.18em] text-terracotta-300">Our promise</div>
               <ul className="mt-5 space-y-4 text-sm leading-relaxed text-cream-50/85">
-                <li className="flex gap-3"><span className="text-terracotta-300">✓</span> A guaranteed window seat for every guest.</li>
-                <li className="flex gap-3"><span className="text-terracotta-300">✓</span> Unlimited mileage on game drives.</li>
-                <li className="flex gap-3"><span className="text-terracotta-300">✓</span> Fair guide compensation and ethical camp policies.</li>
+                <li className="flex gap-3"><SiteIcon name="check" className="mt-1 text-terracotta-300" /> A guaranteed window seat for every guest.</li>
+                <li className="flex gap-3"><SiteIcon name="check" className="mt-1 text-terracotta-300" /> Unlimited mileage on game drives.</li>
+                <li className="flex gap-3"><SiteIcon name="check" className="mt-1 text-terracotta-300" /> Fair guide compensation and ethical camp policies.</li>
               </ul>
               <Link to="/booking" className="btn-primary mt-7 text-sm">Plan your safari</Link>
             </div>

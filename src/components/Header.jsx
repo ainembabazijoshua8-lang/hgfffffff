@@ -4,6 +4,7 @@ import SiteSearch from './SiteSearch.jsx';
 import CurrencySelector from './CurrencySelector.jsx';
 import { useCurrency } from '../context/CurrencyContext.jsx';
 import { fallbackTours as TOUR_CATALOG } from '../data/fallbackTours.js';
+import { ArrowRightIcon, CalendarIcon, PhoneIcon, StarIcon, WhatsAppIcon } from './Icons.jsx';
 
 const nav = [
   { to: '/', label: 'Home' },
@@ -143,13 +144,13 @@ export default function Header() {
       <div className="bg-teal-900 text-cream-100 text-[11px] sm:text-xs py-1.5 border-b border-teal-800/80 relative z-50">
         <div className="container-x flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
           <div className="flex items-center gap-2 tracking-wide font-medium">
-            <span className="text-terracotta-300">🦁</span>
+            <CalendarIcon className="text-terracotta-300 text-[1.1em]" />
             <span>2026/2027 Migration Bookings Open</span>
             {stats.reviews > 0 && stats.avg_rating ? (
               <>
                 <span className="hidden sm:inline text-teal-600">·</span>
-                <span className="hidden sm:inline text-gold-400">
-                  ⭐ {stats.avg_rating}/5 Rating ({stats.reviews} Review{stats.reviews === 1 ? '' : 's'})
+                <span className="hidden sm:inline-flex items-center gap-1 text-gold-400">
+                  <StarIcon /> {stats.avg_rating}/5 Rating ({stats.reviews} Review{stats.reviews === 1 ? '' : 's'})
                 </span>
               </>
             ) : null}
@@ -161,14 +162,16 @@ export default function Header() {
               rel="noopener noreferrer"
               className="hover:text-terracotta-300 transition-colors flex items-center gap-1.5"
             >
-              <span>💬 WhatsApp Arusha</span>
+              <WhatsAppIcon className="text-[1.05em]" />
+              <span>WhatsApp Arusha</span>
             </a>
-            <span className="text-teal-600">·</span>
+            <span className="hidden md:inline text-teal-600">·</span>
             <a
               href="tel:+255657253723"
-              className="hover:text-terracotta-300 transition-colors hidden md:inline"
+              className="hover:text-terracotta-300 transition-colors hidden md:inline-flex items-center gap-1.5"
             >
-              📞 +255 657 253 723
+              <PhoneIcon className="text-[1.05em]" />
+              +255 657 253 723
             </a>
           </div>
         </div>
@@ -199,13 +202,10 @@ export default function Header() {
               <div className="font-display text-base 2xl:text-lg font-bold text-teal-800 tracking-tight whitespace-nowrap">
                 Jebri Safaris
               </div>
-              <div className="hidden 2xl:block text-[10px] tracking-[0.18em] uppercase text-teal-600 font-semibold whitespace-nowrap">
-                Explore · Experience · Remember
-              </div>
             </div>
           </Link>
 
-          <nav className="hidden min-w-0 xl:flex items-center justify-end 2xl:justify-center gap-0.5 2xl:gap-1">
+          <nav className="hidden min-w-0 xl:flex items-center justify-end gap-0.5">
             {nav.map(item => {
               if (item.hasMega) {
                 return (
@@ -295,7 +295,7 @@ export default function Header() {
                               className="text-xs font-bold text-terracotta-500 hover:text-teal-800 transition flex items-center gap-1"
                             >
                               <span>Explore full catalog</span>
-                              <span>➔</span>
+                              <ArrowRightIcon />
                             </Link>
                           </div>
                         </div>
@@ -311,7 +311,7 @@ export default function Header() {
                   to={item.to}
                   end={item.to === '/'}
                   className={({ isActive }) =>
-                    `group relative px-2.5 2xl:px-3 py-1.5 rounded-full text-xs 2xl:text-sm font-medium whitespace-nowrap transition-colors duration-300 overflow-hidden ${
+                    `group relative px-2.5 2xl:px-3.5 py-1.5 rounded-full text-xs 2xl:text-sm font-medium whitespace-nowrap transition-colors duration-300 overflow-hidden ${
                       isActive
                         ? 'text-teal-900 font-semibold'
                         : 'text-teal-700 hover:text-terracotta-500'
@@ -334,7 +334,7 @@ export default function Header() {
             })}
           </nav>
 
-          <div className="flex items-center justify-end gap-2 2xl:gap-3">
+          <div className="flex items-center justify-end gap-2">
             <CurrencySelector />
             <div className="hidden lg:block">
               <SiteSearch />
@@ -449,9 +449,10 @@ export default function Header() {
                   href="https://wa.me/255657253723?text=Hi%20Jebri%20Safaris,%20I%20would%20like%20to%20plan%20a%20safari"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border border-teal-700/30 text-teal-800 text-center rounded-full text-xs font-semibold py-2.5 hover:bg-teal-700 hover:text-cream-50 transition"
+                  className="flex items-center justify-center gap-2 border border-teal-700/30 text-teal-800 rounded-full text-xs font-semibold py-2.5 hover:bg-teal-700 hover:text-cream-50 transition"
                 >
-                  💬 Chat on WhatsApp (+255 657 253 723)
+                  <WhatsAppIcon className="text-[1.15em]" />
+                  Chat on WhatsApp (+255 657 253 723)
                 </a>
               </div>
             </div>

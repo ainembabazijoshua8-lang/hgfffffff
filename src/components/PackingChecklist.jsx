@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
+import { SiteIcon } from './Icons.jsx';
 
 const PACKING_CATEGORIES = [
   {
     id: 'clothing',
     title: 'Safari Clothing & Layers',
-    icon: '🧥',
+    icon: 'shirt',
     note: 'Neutral bush colors (khaki, olive, beige) are practical for dust and sun. Long sleeves also help with sun and insect protection.',
     items: [
       { id: 'c1', name: 'Lightweight neutral long-sleeve shirts (sun & insect protection)', essential: true },
@@ -20,7 +21,7 @@ const PACKING_CATEGORIES = [
   {
     id: 'optics',
     title: 'Photography & Optics',
-    icon: '📷',
+    icon: 'camera',
     note: 'Wildlife can be distant; good optics transform your safari experience completely.',
     items: [
       { id: 'p1', name: 'High-quality binoculars (8x42 or 10x42 recommended — one pair per traveler)', essential: true },
@@ -35,7 +36,7 @@ const PACKING_CATEGORIES = [
   {
     id: 'health',
     title: 'Health, Medical & Sun Protection',
-    icon: '💊',
+    icon: 'pill',
     note: 'Check with your travel clinic 6–8 weeks before departure for personal advice.',
     items: [
       { id: 'h1', name: 'Prescribed Malaria prophylaxis (consult your travel doctor)', essential: true },
@@ -50,7 +51,7 @@ const PACKING_CATEGORIES = [
   {
     id: 'documents',
     title: 'Travel Documents & Money',
-    icon: '🛂',
+    icon: 'passport',
     note: 'Keep physical copies and digital cloud backups of all vital documents.',
     items: [
       { id: 'd1', name: 'Passport with at least 6 months validity & 2 blank pages', essential: true },
@@ -64,7 +65,7 @@ const PACKING_CATEGORIES = [
   {
     id: 'gear',
     title: 'Bush & Luggage Essentials',
-    icon: '🎒',
+    icon: 'backpack',
     note: 'Baggage allowances vary by carrier and itinerary. Confirm weight limits and soft-bag rules before packing.',
     items: [
       { id: 'g1', name: 'Soft-sided duffel bag if required by your bush-flight operator', essential: true },
@@ -145,7 +146,7 @@ export default function PackingChecklist({ className = '' }) {
             onClick={handlePrint}
             className="btn-ghost text-xs px-3.5 py-1.5 border border-savanna-200 bg-white"
           >
-            🖨️ Print list
+            <SiteIcon name="printer" className="mr-1.5 align-[-2px]" />Print list
           </button>
           <button
             type="button"
@@ -197,7 +198,7 @@ export default function PackingChecklist({ className = '' }) {
                 : 'bg-white border border-savanna-200 text-teal-800 hover:bg-cream-100'
             }`}
           >
-            <span>{cat.icon}</span>
+            <SiteIcon name={cat.icon} />
             <span>{cat.title.split(' ')[0]}</span>
           </button>
         ))}
@@ -208,11 +209,11 @@ export default function PackingChecklist({ className = '' }) {
         {displayedCategories.map(cat => (
           <div key={cat.id} className="bg-white rounded-2xl border border-savanna-200 p-5 sm:p-6 shadow-sm">
             <div className="flex items-center gap-2.5 mb-1.5">
-              <span className="text-xl">{cat.icon}</span>
+              <SiteIcon name={cat.icon} className="text-xl text-terracotta-500" />
               <h4 className="font-display text-xl text-teal-800">{cat.title}</h4>
             </div>
             <p className="text-xs text-teal-600/90 mb-4 bg-cream-50 p-2.5 rounded-xl border border-savanna-100">
-              💡 {cat.note}
+              <SiteIcon name="lightbulb" className="mr-1 align-[-2px]" />{cat.note}
             </p>
 
             <div className="grid sm:grid-cols-2 gap-2.5">

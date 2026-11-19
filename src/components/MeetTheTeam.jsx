@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { SiteIcon } from './Icons.jsx';
 
 const GUIDES = [
   {
@@ -28,12 +29,12 @@ const GUIDES = [
 ];
 
 const FLEET_FEATURES = [
-  { icon: '🪟', title: 'Guaranteed Window Seat', desc: 'Max 6 guests per vehicle. No one gets squeezed in a middle seat.' },
-  { icon: '🔝', title: 'Full Pop-Up Roof', desc: 'Complete 360-degree unobstructed height for wildlife photography.' },
-  { icon: '⚡', title: '220V & USB Charging', desc: 'Charge DSLR batteries, cameras, and phones while on game drives.' },
-  { icon: '🧊', title: 'Onboard Electric Fridge', desc: 'Cold mineral water, sodas, and safari snacks always chilled.' },
-  { icon: '📻', title: 'Long-Range Bush Radio', desc: 'Direct communications with rangers & guides for real-time sightings.' },
-  { icon: '🔭', title: 'Nikon Binoculars Provided', desc: 'High-powered optics onboard for distant predator & bird spotting.' },
+  { icon: 'seat', title: 'Guaranteed Window Seat', desc: 'Max 6 guests per vehicle. No one gets squeezed in a middle seat.' },
+  { icon: 'roof', title: 'Full Pop-Up Roof', desc: 'Complete 360-degree unobstructed height for wildlife photography.' },
+  { icon: 'bolt', title: '220V & USB Charging', desc: 'Charge DSLR batteries, cameras, and phones while on game drives.' },
+  { icon: 'fridge', title: 'Onboard Electric Fridge', desc: 'Cold mineral water, sodas, and safari snacks always chilled.' },
+  { icon: 'radio', title: 'Long-Range Bush Radio', desc: 'Direct communications with rangers & guides for real-time sightings.' },
+  { icon: 'binoculars', title: 'Nikon Binoculars Provided', desc: 'High-powered optics onboard for distant predator & bird spotting.' },
 ];
 
 export default function MeetTheTeam() {
@@ -63,7 +64,7 @@ export default function MeetTheTeam() {
                   </div>
                   <h3 className="font-display text-xl font-bold text-teal-900">{guide.name}</h3>
                   <div className="text-xs font-semibold text-terracotta-500 mt-0.5">{guide.role}</div>
-                  <div className="text-[11px] text-teal-600 mt-1">🗣️ {guide.languages}</div>
+                  <div className="text-[11px] text-teal-600 mt-1 flex items-center gap-1"><SiteIcon name="speech" /> {guide.languages}</div>
                   <p className="mt-3 text-xs sm:text-sm text-teal-700/85 leading-relaxed">
                     {guide.bio}
                   </p>
@@ -92,7 +93,7 @@ export default function MeetTheTeam() {
               <div className="grid sm:grid-cols-2 gap-4 mt-6 text-xs sm:text-sm">
                 {FLEET_FEATURES.map((f) => (
                   <div key={f.title} className="flex items-start gap-2.5">
-                    <span className="text-xl shrink-0" aria-hidden="true">{f.icon}</span>
+                    <SiteIcon name={f.icon} className="text-xl text-terracotta-300 mt-0.5" />
                     <div>
                       <div className="font-bold text-cream-50">{f.title}</div>
                       <div className="text-cream-100/70 text-[11px] leading-snug">{f.desc}</div>
@@ -103,7 +104,7 @@ export default function MeetTheTeam() {
 
               <div className="mt-8 flex flex-wrap gap-4 items-center">
                 <Link to="/booking" className="btn-primary bg-terracotta-500 hover:bg-terracotta-600 border border-terracotta-400 text-xs sm:text-sm">
-                  Plan Safari in Our 4x4 Land Cruiser ➔
+                  Plan Safari in Our 4x4 Land Cruiser <SiteIcon name="arrow-right" />
                 </Link>
                 <span className="text-xs text-cream-100/70">
                   Strictly 6 travelers max per vehicle
@@ -120,7 +121,7 @@ export default function MeetTheTeam() {
                 />
               </div>
               <div className="absolute -bottom-4 -left-4 bg-linen text-teal-900 px-4 py-2.5 rounded-xl shadow-card border border-savanna-200 text-xs font-bold flex items-center gap-2">
-                <span className="text-terracotta-500 text-base">🛡️</span>
+                <SiteIcon name="shield-check" className="text-terracotta-500 text-base" />
                 <span>Locally operated safari team</span>
               </div>
             </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { SiteIcon } from './Icons.jsx';
 
 export default function TrustStrip() {
   const [stats, setStats] = useState({ inquiries: 0, tours: 0, reviews: 0, avg_rating: null, years: 0 });
@@ -24,7 +25,7 @@ export default function TrustStrip() {
           />
           <Stat n={stats.tours || 'Curated'} label="Curated Tours" />
           <Stat
-            n={stats.avg_rating ? `${stats.avg_rating}★` : '—'}
+            n={stats.avg_rating ? <span className="inline-flex items-center gap-1">{stats.avg_rating}<SiteIcon name="star" className="text-[0.7em]" /></span> : '—'}
             label="Average Rating"
           />
           <Stat n={`${stats.years >= 1 ? stats.years : 'New'}`} label="Years of Service" />

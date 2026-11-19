@@ -13,6 +13,7 @@ import { ACTIVITY_CATALOG } from '../data/activitiesCatalog.js';
 import { useCurrency } from '../context/CurrencyContext.jsx';
 import { buildWhatsAppMessage, openWhatsApp } from '../utils/whatsapp.js';
 import { tourPricePerPerson, maxTravelersFor } from '../../shared-pricing.js';
+import { SiteIcon } from './Icons.jsx';
 
 const STEPS = ['Tours', 'Activities', 'Travelers', 'Contact & Send'];
 const VALID_ACTIVITY_IDS = new Set(ACTIVITY_CATALOG.map(a => a.id));
@@ -208,7 +209,7 @@ export default function TripPlanner() {
     return (
       <div className="glass-card p-8 sm:p-12 text-center rounded-3xl animate-fade-up max-w-3xl mx-auto shadow-2xl border border-savanna-200">
         <div className="w-16 h-16 rounded-full bg-sage-100 text-sage-700 flex items-center justify-center text-3xl mx-auto mb-4 shadow-sm font-bold">
-          ✓
+          <SiteIcon name="check" />
         </div>
         <span className="eyebrow text-terracotta-500 font-bold">Inquiry Successfully Received</span>
         <h2 className="font-display text-3xl sm:text-4xl text-teal-900 font-bold mt-2">
@@ -223,15 +224,15 @@ export default function TripPlanner() {
 
         <div className="mt-6 p-5 bg-cream-100/70 rounded-2xl border border-savanna-200 text-left max-w-lg mx-auto text-xs sm:text-sm text-teal-900 space-y-2">
           <div className="font-bold text-teal-900 pb-1.5 border-b border-savanna-200">Trip Plan Summary</div>
-          <div>👤 <strong>Traveler:</strong> {contact.name} ({contact.email})</div>
-          <div>👥 <strong>Group Size:</strong> {travelers} traveler{travelers !== 1 ? 's' : ''}</div>
-          <div>📅 <strong>Dates:</strong> {travel.start_date} to {travel.end_date}</div>
-          <div>🦁 <strong>Selected Tours:</strong> {selectedTours.map(t => t.title).join(', ') || 'Custom itinerary'}</div>
+          <div><SiteIcon name="user" className="mr-1.5 align-[-2px] text-teal-600" /><strong>Traveler:</strong> {contact.name} ({contact.email})</div>
+          <div><SiteIcon name="users" className="mr-1.5 align-[-2px] text-teal-600" /><strong>Group Size:</strong> {travelers} traveler{travelers !== 1 ? 's' : ''}</div>
+          <div><SiteIcon name="calendar" className="mr-1.5 align-[-2px] text-teal-600" /><strong>Dates:</strong> {travel.start_date} to {travel.end_date}</div>
+          <div><SiteIcon name="map" className="mr-1.5 align-[-2px] text-teal-600" /><strong>Selected Tours:</strong> {selectedTours.map(t => t.title).join(', ') || 'Custom itinerary'}</div>
           {selectedActivities.length > 0 && (
-            <div>🎈 <strong>Activities:</strong> {selectedActivities.map(a => a.title).join(', ')}</div>
+            <div><SiteIcon name="balloon" className="mr-1.5 align-[-2px] text-teal-600" /><strong>Activities:</strong> {selectedActivities.map(a => a.title).join(', ')}</div>
           )}
           <div className="pt-1.5 border-t border-savanna-200 text-terracotta-600 font-bold">
-            💰 Estimated Total: {requiresCustomQuote ? 'Custom quote required' : formatPrice(estimate)}
+            <SiteIcon name="wallet" className="mr-1.5 align-[-2px]" />Estimated Total: {requiresCustomQuote ? 'Custom quote required' : formatPrice(estimate)}
           </div>
         </div>
 
@@ -244,14 +245,15 @@ export default function TripPlanner() {
             }}
             className="bg-[#25D366] hover:bg-[#1EBE5D] text-white font-bold py-3.5 px-6 rounded-full text-sm transition flex items-center gap-2 shadow-md hover:shadow-lg"
           >
-            <span>💬 Continue with Specialist on WhatsApp</span>
+            <SiteIcon name="whatsapp" className="text-lg" />
+            <span>Continue with Specialist on WhatsApp</span>
           </button>
           <button
             type="button"
             onClick={() => window.print()}
             className="btn-ghost text-sm border border-savanna-300 bg-white"
           >
-            📄 Print Summary
+            <SiteIcon name="printer" className="mr-1.5 align-[-2px]" />Print Summary
           </button>
           <button
             type="button"
@@ -339,10 +341,10 @@ export default function TripPlanner() {
               onClick={() => window.print()}
               className="btn-ghost text-xs border border-savanna-300 bg-white"
             >
-              🖨️ Print Summary
+              <SiteIcon name="printer" className="mr-1.5 align-[-2px]" />Print Summary
             </button>
             <button type="submit" disabled={status.state === 'loading' || !contact.name || !contact.email} className="btn-primary disabled:opacity-50">
-              {status.state === 'loading' ? 'Submitting…' : 'Send My Trip Plan ➔'}
+              {status.state === 'loading' ? 'Submitting…' : <>Send My Trip Plan <SiteIcon name="arrow-right" /></>}
             </button>
           </div>
         )}
@@ -447,7 +449,7 @@ function Step1Tours({ tours, toursLoading, toursError, picks, onToggle, tierFilt
                 <div className={`shrink-0 self-center w-6 h-6 rounded-full border-2 flex items-center justify-center ${
                   selected ? 'bg-terracotta-400 border-terracotta-400 text-cream-50' : 'border-savanna-200'
                 }`}>
-                  {selected && '✓'}
+                  {selected && <SiteIcon name="check" className="text-xs" />}
                 </div>
               </div>
             </button>
@@ -566,7 +568,7 @@ function ActivityCard({ a, selected, onToggle }) {
       <div className="p-4 flex flex-col gap-2">
         {/* Top row: icon + tier badge + category label */}
         <div className="flex items-center gap-2 text-xs">
-          <span aria-hidden="true" className="text-lg leading-none">{a.icon}</span>
+          <SiteIcon name={a.icon} className="text-lg text-terracotta-500" />
           <span className={`px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide ${tierStyle}`}>
             {tier === 'budget' ? 'Budget' : tier === 'luxury' ? 'Luxury' : 'Standard'}
           </span>
@@ -601,7 +603,7 @@ function ActivityCard({ a, selected, onToggle }) {
           <span className={`w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs ${
             selected ? 'bg-terracotta-400 border-terracotta-400 text-cream-50 shadow' : 'border-savanna-200 bg-cream-50/90 backdrop-blur'
           }`}>
-            {selected ? '✓' : ''}
+            {selected ? <SiteIcon name="check" /> : null}
           </span>
         </div>
       </div>
@@ -812,7 +814,7 @@ ${travel.tier ? `🎯 *Tier:* ${travel.tier}\n` : ''}${toursText ? `\n*Selected 
             <ul className="space-y-1 text-sm text-teal-700/85">
               {selectedActivities.map(a => (
                 <li key={a.id} className="flex justify-between gap-3">
-                  <span>{a.icon} {a.title} <span className="text-teal-500 text-xs">{a.requires_quote ? '(custom quote)' : a.is_per_person === false ? '(flat fee)' : `(× ${travelers} travelers)`}</span></span>
+                  <span><SiteIcon name={a.icon} className="mr-1.5 align-[-2px] text-teal-600" />{a.title} <span className="text-teal-500 text-xs">{a.requires_quote ? '(custom quote)' : a.is_per_person === false ? '(flat fee)' : `(× ${travelers} travelers)`}</span></span>
                   <span className="font-semibold">{a.requires_quote ? 'Quote required' : formatPrice(a.is_per_person === false ? a.price_usd : (Number(a.price_usd) || 0) * travelers)}</span>
                 </li>
               ))}
@@ -821,13 +823,13 @@ ${travel.tier ? `🎯 *Tier:* ${travel.tier}\n` : ''}${toursText ? `\n*Selected 
         )}
 
         <div className="border-t border-savanna-200 pt-3 mt-3 space-y-1 text-sm text-teal-700/85">
-          <div>📅 Start date: <strong>{travel.start_date || '—'}</strong></div>
-          <div>🔚 End date: <strong>{travel.end_date || '—'}</strong></div>
-          <div>✈️ Flight date: <strong>{travel.flight_date || '—'}</strong></div>
-          <div>👥 Travelers: <strong>{travel.travelers}</strong></div>
-          {travel.tier && <div>🎯 Tier: <strong>{TIER_LABEL[travel.tier] || travel.tier}</strong></div>}
-          {travel.duration && <div>🗓 Duration: <strong>{travel.duration}</strong></div>}
-          {travel.country && <div>🌍 Flying from: <strong>{travel.country}</strong></div>}
+          <div><SiteIcon name="calendar" className="mr-1.5 align-[-2px] text-teal-600" />Start date: <strong>{travel.start_date || '—'}</strong></div>
+          <div><SiteIcon name="calendar-check" className="mr-1.5 align-[-2px] text-teal-600" />End date: <strong>{travel.end_date || '—'}</strong></div>
+          <div><SiteIcon name="plane" className="mr-1.5 align-[-2px] text-teal-600" />Flight date: <strong>{travel.flight_date || '—'}</strong></div>
+          <div><SiteIcon name="users" className="mr-1.5 align-[-2px] text-teal-600" />Travelers: <strong>{travel.travelers}</strong></div>
+          {travel.tier && <div><SiteIcon name="target" className="mr-1.5 align-[-2px] text-teal-600" />Tier: <strong>{TIER_LABEL[travel.tier] || travel.tier}</strong></div>}
+          {travel.duration && <div><SiteIcon name="clock" className="mr-1.5 align-[-2px] text-teal-600" />Duration: <strong>{travel.duration}</strong></div>}
+          {travel.country && <div><SiteIcon name="globe" className="mr-1.5 align-[-2px] text-teal-600" />Flying from: <strong>{travel.country}</strong></div>}
         </div>
 
         <div className="border-t border-savanna-200 pt-4 mt-4 space-y-2 text-sm text-teal-700/85">

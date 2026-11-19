@@ -5,6 +5,7 @@ import LazySafariMap from '../components/LazySafariMap.jsx';
 import MigrationCalendar from '../components/MigrationCalendar.jsx';
 import TourCompareDrawer from '../components/TourCompareDrawer.jsx';
 import { fallbackTours } from '../data/fallbackTours.js';
+import { SiteIcon } from '../components/Icons.jsx';
 
 const CATEGORIES = ['All', 'Wildlife Safari', 'Cultural Tour'];
 const TIERS = [
@@ -190,7 +191,7 @@ export default function ToursPage() {
                 : 'bg-cream-50/80 backdrop-blur-md text-teal-800 border border-savanna-200 hover:bg-cream-50 hover:shadow-sm'
             }`}
           >
-            📋 Tour Packages ({tours.length})
+            <SiteIcon name="clipboard" /> Tour Packages ({tours.length})
           </button>
           <button
             type="button"
@@ -201,7 +202,7 @@ export default function ToursPage() {
                 : 'bg-cream-50/80 backdrop-blur-md text-teal-800 border border-savanna-200 hover:bg-cream-50 hover:shadow-sm'
             }`}
           >
-            <span>🗺️</span> Circuit Map
+            <SiteIcon name="map" /> Circuit Map
           </button>
           <button
             type="button"
@@ -212,7 +213,7 @@ export default function ToursPage() {
                 : 'bg-cream-50/80 backdrop-blur-md text-teal-800 border border-savanna-200 hover:bg-cream-50 hover:shadow-sm'
             }`}
           >
-            <span>🦓</span> Migration Calendar
+            <SiteIcon name="calendar" /> Migration Calendar
           </button>
         </div>
       </section>

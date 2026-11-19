@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fallbackTours as TOUR_CATALOG } from '../data/fallbackTours.js';
+import { SiteIcon } from './Icons.jsx';
 
 const DESTINATIONS = [
   { value: '', label: 'All Destinations & Parks' },
@@ -73,7 +74,7 @@ export default function HeroQuickSearch() {
       >
         {/* Destination select */}
         <div className="flex items-center gap-2 px-3 py-2 bg-cream-50/70 rounded-xl sm:rounded-full border border-savanna-200/50">
-          <span className="text-terracotta-500 text-base" aria-hidden="true">📍</span>
+          <SiteIcon name="map-pin" className="text-terracotta-500 text-base" />
           <div className="flex-1 min-w-0">
             <label htmlFor="quick-dest" className="block text-[10px] uppercase font-bold tracking-wider text-teal-600">
               Where to?
@@ -95,7 +96,7 @@ export default function HeroQuickSearch() {
 
         {/* Style / Tier select */}
         <div className="flex items-center gap-2 px-3 py-2 bg-cream-50/70 rounded-xl sm:rounded-full border border-savanna-200/50">
-          <span className="text-terracotta-500 text-base" aria-hidden="true">✨</span>
+          <SiteIcon name="sparkles" className="text-terracotta-500 text-base" />
           <div className="flex-1 min-w-0">
             <label htmlFor="quick-style" className="block text-[10px] uppercase font-bold tracking-wider text-teal-600">
               Safari Tier
@@ -121,7 +122,7 @@ export default function HeroQuickSearch() {
           className="btn-primary py-3 sm:py-3.5 px-6 rounded-xl sm:rounded-full text-xs sm:text-sm font-bold tracking-wide w-full sm:w-auto bg-terracotta-500 hover:bg-terracotta-600 border border-terracotta-400/50 shadow-glow flex items-center justify-center gap-2"
         >
           <span>Find Safaris</span>
-          <span aria-hidden="true">➔</span>
+          <SiteIcon name="arrow-right" />
         </button>
       </form>
     </div>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { buildWhatsAppMessage, openWhatsApp } from '../utils/whatsapp.js';
+import { SiteIcon } from '../components/Icons.jsx';
 
 const initial = { name: '', email: '', phone: '', message: '', website: '' };
 
@@ -120,14 +121,14 @@ export default function ContactPage() {
             <h3 className="font-display text-2xl text-teal-800 mb-5">Reach us directly</h3>
             <ul className="space-y-5 text-teal-700/85">
               <li className="flex gap-4">
-                <span className="text-terracotta-400 shrink-0 mt-0.5 text-xl">📞</span>
+                <SiteIcon name="phone" className="text-terracotta-400 shrink-0 mt-0.5 text-xl" />
                 <div className="min-w-0">
                   <div className="font-semibold">Phone</div>
                   <a href="tel:+255657253723" className="hover:text-terracotta-400 break-all">+255 657 253 723</a>
                 </div>
               </li>
               <li className="flex gap-4">
-                <span className="text-terracotta-400 shrink-0 mt-0.5 text-xl">💬</span>
+                <SiteIcon name="whatsapp" className="text-terracotta-400 shrink-0 mt-0.5 text-xl" />
                 <div className="min-w-0">
                   <div className="font-semibold text-teal-800">WhatsApp</div>
                   <a href="https://wa.me/255657253723" className="hover:text-terracotta-400">+255 657 253 723</a>
@@ -137,14 +138,14 @@ export default function ContactPage() {
                 </div>
               </li>
               <li className="flex gap-4">
-                <span className="text-terracotta-400 shrink-0 mt-0.5 text-xl">📍</span>
+                <SiteIcon name="map-pin" className="text-terracotta-400 shrink-0 mt-0.5 text-xl" />
                 <div>
                   <div className="font-semibold text-teal-800">Office</div>
                   <span className="text-sm">Old Moshi Road, Arusha, Tanzania</span>
                 </div>
               </li>
               <li className="flex gap-4">
-                <span className="text-terracotta-400 shrink-0 mt-0.5 text-xl">🕐</span>
+                <SiteIcon name="clock" className="text-terracotta-400 shrink-0 mt-0.5 text-xl" />
                 <div>
                   <div className="font-semibold text-teal-800">Office hours</div>
                   <span className="text-sm">Mon–Sat · 8:00–18:00 EAT (UTC+3)</span>

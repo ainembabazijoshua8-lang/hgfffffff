@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { SiteIcon } from './Icons.jsx';
 
 const MONTHS_DATA = [
   {
@@ -12,7 +13,8 @@ const MONTHS_DATA = [
     highlight: '8,000 wildebeest calves born every single day. Big cats (cheetahs, lions, leopards) stalk the short grass plains in plain sight.',
     predatorRating: 5,
     bestParks: ['Southern Serengeti', 'Ndutu', 'Ngorongoro Crater', 'Tarangire'],
-    photography: '⭐⭐⭐⭐⭐ High-contrast predator hunts, baby animals, crystal-clear morning light.',
+    photoRating: 5,
+    photography: 'High-contrast predator hunts, baby animals, crystal-clear morning light.',
     recommendedTourSlug: 'serengeti-classic',
   },
   {
@@ -25,7 +27,8 @@ const MONTHS_DATA = [
     highlight: 'The absolute peak of the calving phenomenon. Incredible predator interaction as mothers defend vulnerable calves.',
     predatorRating: 5,
     bestParks: ['Ndutu Plains', 'Central Serengeti (Seronera)', 'Ngorongoro'],
-    photography: '⭐⭐⭐⭐⭐ Dramatic hunt sequences, newborn calves running within 10 minutes of birth.',
+    photoRating: 5,
+    photography: 'Dramatic hunt sequences, newborn calves running within 10 minutes of birth.',
     recommendedTourSlug: 'serengeti-classic',
   },
   {
@@ -38,7 +41,8 @@ const MONTHS_DATA = [
     highlight: 'As the calves gain strength, the mega-herds begin their march northwestward in search of fresh rainwater and sweet grass.',
     predatorRating: 4,
     bestParks: ['Western Corridor', 'Central Serengeti', 'Lake Manyara'],
-    photography: '⭐⭐⭐⭐ Lush green backgrounds, dramatic cloudscapes, energetic herds.',
+    photoRating: 4,
+    photography: 'Lush green backgrounds, dramatic cloudscapes, energetic herds.',
     recommendedTourSlug: 'serengeti-classic',
   },
   {
@@ -51,7 +55,8 @@ const MONTHS_DATA = [
     highlight: 'Safari lodges offer secret green-season rates. Pristine landscapes, zero safari vehicle crowds, and thousands of migratory bird species.',
     predatorRating: 4,
     bestParks: ['Central Serengeti (resident big cats)', 'Ngorongoro Crater'],
-    photography: '⭐⭐⭐⭐ Emerald green vistas, moody storm skies, no other tourist vehicles in your frame.',
+    photoRating: 4,
+    photography: 'Emerald green vistas, moody storm skies, no other tourist vehicles in your frame.',
     recommendedTourSlug: 'ngorongoro-crater-express',
   },
   {
@@ -64,7 +69,8 @@ const MONTHS_DATA = [
     highlight: 'Herds mass along the Grumeti River where giant prehistoric Nile crocodiles wait in the deep pools.',
     predatorRating: 4,
     bestParks: ['Grumeti Reserve', 'Western Serengeti', 'Tarangire'],
-    photography: '⭐⭐⭐⭐ Wild river encounters, dense columns of wildebeest stretching to the horizon.',
+    photoRating: 4,
+    photography: 'Wild river encounters, dense columns of wildebeest stretching to the horizon.',
     recommendedTourSlug: 'serengeti-classic',
   },
   {
@@ -77,7 +83,8 @@ const MONTHS_DATA = [
     highlight: 'Dry season begins. Animals concentrate around water sources. Excellent visibility as the savannah grass dries down.',
     predatorRating: 5,
     bestParks: ['Central Serengeti', 'Tarangire (elephants arriving)', 'Ngorongoro'],
-    photography: '⭐⭐⭐⭐⭐ Classic golden savannah lighting, sharp wildlife visibility.',
+    photoRating: 5,
+    photography: 'Classic golden savannah lighting, sharp wildlife visibility.',
     recommendedTourSlug: 'tarangire-elephant-safari',
   },
   {
@@ -90,7 +97,8 @@ const MONTHS_DATA = [
     highlight: 'The legendary Mara River crossings commence. Giant herds plunge into the rushing waters braving crocodile currents and steep riverbanks.',
     predatorRating: 5,
     bestParks: ['Northern Serengeti (Kogatende)', 'Mara River', 'Tarangire'],
-    photography: '⭐⭐⭐⭐⭐ High-adrenaline river crossings, dust clouds, dramatic survival moments.',
+    photoRating: 5,
+    photography: 'High-adrenaline river crossings, dust clouds, dramatic survival moments.',
     recommendedTourSlug: 'serengeti-classic',
   },
   {
@@ -103,7 +111,8 @@ const MONTHS_DATA = [
     highlight: 'Multiple daily river crossings across the Northern Serengeti border. The ultimate wildlife spectacle on planet earth.',
     predatorRating: 5,
     bestParks: ['Northern Serengeti', 'Maasai Mara', 'Tarangire'],
-    photography: '⭐⭐⭐⭐⭐ Iconic National Geographic river crossing shots and leopard encounters in rocky kopjes.',
+    photoRating: 5,
+    photography: 'Iconic National Geographic river crossing shots and leopard encounters in rocky kopjes.',
     recommendedTourSlug: 'serengeti-classic',
   },
   {
@@ -116,7 +125,8 @@ const MONTHS_DATA = [
     highlight: 'Herds roam between Kenya and Tanzania following localized rain. Big cat territorial battles are frequent.',
     predatorRating: 5,
     bestParks: ['Northern Serengeti', 'Maasai Mara', 'Tarangire baobab riverbeds'],
-    photography: '⭐⭐⭐⭐⭐ Pristine golden hour lighting, unobstructed bush views.',
+    photoRating: 5,
+    photography: 'Pristine golden hour lighting, unobstructed bush views.',
     recommendedTourSlug: 'serengeti-classic',
   },
   {
@@ -129,7 +139,8 @@ const MONTHS_DATA = [
     highlight: 'Herds begin their southwards journey back into Tanzania as thunderclouds gather over the southern plains.',
     predatorRating: 4,
     bestParks: ['Central Serengeti', 'Tarangire (peak elephant concentrations)', 'Ngorongoro'],
-    photography: '⭐⭐⭐⭐ Superb elephant herd interaction and predator stalking.',
+    photoRating: 4,
+    photography: 'Superb elephant herd interaction and predator stalking.',
     recommendedTourSlug: 'tarangire-elephant-safari',
   },
   {
@@ -142,7 +153,8 @@ const MONTHS_DATA = [
     highlight: 'Short rains transform the dry dust into a carpet of tender green grass. Eurasian migratory birds arrive in their millions.',
     predatorRating: 4,
     bestParks: ['Eastern Serengeti', 'Central Plains', 'Lake Manyara'],
-    photography: '⭐⭐⭐⭐ Intense green landscape contrasts, rainbow skies, incredible bird photography.',
+    photoRating: 4,
+    photography: 'Intense green landscape contrasts, rainbow skies, incredible bird photography.',
     recommendedTourSlug: 'lake-manyara-day-trip',
   },
   {
@@ -155,7 +167,8 @@ const MONTHS_DATA = [
     highlight: 'The entire herd is reunited in the south, grazing heavily and preparing for the upcoming calving cycle.',
     predatorRating: 5,
     bestParks: ['Southern Serengeti', 'Ndutu', 'Ngorongoro Crater'],
-    photography: '⭐⭐⭐⭐⭐ Festive season safari memories, lush plains, dense wildlife gatherings.',
+    photoRating: 5,
+    photography: 'Festive season safari memories, lush plains, dense wildlife gatherings.',
     recommendedTourSlug: 'serengeti-classic',
   },
 ];
@@ -178,7 +191,7 @@ export default function MigrationCalendar({ className = '' }) {
         </div>
 
         <div className="flex items-center gap-2 self-start md:self-auto bg-cream-100 px-4 py-2 rounded-2xl border border-savanna-200 text-xs">
-          <span className="text-terracotta-400 font-bold">🦁 Pro Tip:</span>
+          <span className="inline-flex items-center gap-1 text-terracotta-400 font-bold"><SiteIcon name="paw" /> Pro Tip:</span>
           <span className="text-teal-800">Every month in East Africa offers premier Big 5 viewing.</span>
         </div>
       </div>
@@ -201,7 +214,8 @@ export default function MigrationCalendar({ className = '' }) {
               >
                 <span className="text-xs font-bold uppercase">{item.short}</span>
                 <span className={`text-[9px] mt-0.5 ${isSelected ? 'text-cream-100' : 'text-teal-500'}`}>
-                  {item.predatorRating === 5 ? '🔥 Peak' : '🌿 Good'}
+                  <SiteIcon name={item.predatorRating === 5 ? 'flame' : 'leaf'} className="mr-0.5 align-[-1px]" />
+                  {item.predatorRating === 5 ? 'Peak' : 'Good'}
                 </span>
               </button>
             );
@@ -217,8 +231,8 @@ export default function MigrationCalendar({ className = '' }) {
               <span className="text-xs font-bold uppercase tracking-wider bg-terracotta-50 text-terracotta-500 px-3 py-1 rounded-full border border-terracotta-200">
                 {currentMonth.phase}
               </span>
-              <span className="text-xs font-semibold bg-cream-100 text-teal-800 px-3 py-1 rounded-full">
-                📍 {currentMonth.location}
+              <span className="inline-flex items-center gap-1 text-xs font-semibold bg-cream-100 text-teal-800 px-3 py-1 rounded-full">
+                <SiteIcon name="map-pin" /> {currentMonth.location}
               </span>
             </div>
             <h4 className="font-display text-3xl text-teal-800 mt-2">
@@ -232,8 +246,9 @@ export default function MigrationCalendar({ className = '' }) {
           <div className="lg:w-72 shrink-0 bg-cream-50 rounded-xl p-4 border border-savanna-100 space-y-3 text-xs">
             <div>
               <div className="text-teal-500 font-semibold uppercase text-[10px] tracking-wider">Predator Action Index</div>
-              <div className="text-terracotta-400 font-bold text-base mt-0.5">
-                {'⭐'.repeat(currentMonth.predatorRating)} ({currentMonth.predatorRating}/5)
+              <div className="flex items-center gap-0.5 text-terracotta-400 font-bold text-base mt-0.5">
+                {Array.from({ length: currentMonth.predatorRating }, (_, i) => <SiteIcon key={i} name="star" />)}
+                <span className="ml-1">({currentMonth.predatorRating}/5)</span>
               </div>
             </div>
             <div>
@@ -255,13 +270,17 @@ export default function MigrationCalendar({ className = '' }) {
             </div>
             <div className="flex flex-wrap gap-1.5">
               {currentMonth.bestParks.map(park => (
-                <span key={park} className="bg-cream-100 text-teal-800 px-2.5 py-1 rounded-lg text-xs font-medium border border-savanna-100">
-                  ✓ {park}
+                <span key={park} className="inline-flex items-center gap-1 bg-cream-100 text-teal-800 px-2.5 py-1 rounded-lg text-xs font-medium border border-savanna-100">
+                  <SiteIcon name="check" className="text-sage-600" /> {park}
                 </span>
               ))}
             </div>
             <div className="text-teal-700/70 pt-1">
-              📷 <strong>Photography Note:</strong> {currentMonth.photography}
+              <SiteIcon name="camera" className="mr-1 align-[-2px]" /><strong>Photography Note:</strong>{' '}
+              <span className="inline-flex gap-px align-[-1px] text-gold-500" title={`${currentMonth.photoRating}/5 for photography`}>
+                {Array.from({ length: currentMonth.photoRating }, (_, i) => <SiteIcon key={i} name="star" />)}
+              </span>{' '}
+              {currentMonth.photography}
             </div>
           </div>
 

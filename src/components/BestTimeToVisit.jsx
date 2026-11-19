@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { SiteIcon } from './Icons.jsx';
 
 const MONTHS = [
   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -10,7 +11,7 @@ const PARKS = [
   {
     id: 'serengeti',
     name: 'Serengeti',
-    emoji: '🦁',
+    emoji: 'paw',
     months: [
       { weather: 'dry',   crowd: 'medium', wildlife: 'Calving season — predator action',        tip: 'Best for newborns & big cats' },
       { weather: 'dry',   crowd: 'medium', wildlife: 'Calving continues, cheetah sightings',    tip: 'Excellent predator density' },
@@ -29,7 +30,7 @@ const PARKS = [
   {
     id: 'ngorongoro',
     name: 'Ngorongoro',
-    emoji: '🦏',
+    emoji: 'paw',
     months: [
       { weather: 'dry',   crowd: 'medium', wildlife: 'Rhino & lion visible all year',           tip: 'Misty mornings add atmosphere' },
       { weather: 'dry',   crowd: 'medium', wildlife: 'Flamingos on Lake Magadi',                tip: 'Cool, crisp crater mornings' },
@@ -48,7 +49,7 @@ const PARKS = [
   {
     id: 'tarangire',
     name: 'Tarangire',
-    emoji: '🐘',
+    emoji: 'paw',
     months: [
       { weather: 'dry',   crowd: 'low',    wildlife: 'Elephants near the river',                tip: 'Quiet, authentic bush feel' },
       { weather: 'dry',   crowd: 'low',    wildlife: 'Baobabs with elephant herds',             tip: 'Uncrowded & affordable' },
@@ -70,7 +71,8 @@ const weatherColors = {
   dry:   'bg-amber-100 text-amber-800 border border-amber-200',
   rains: 'bg-sky-100 text-sky-800 border border-sky-200',
 };
-const weatherLabel = { dry: '☀️ Dry', rains: '🌧️ Rains' };
+const weatherLabel = { dry: 'Dry', rains: 'Rains' };
+const weatherIcon = { dry: 'sun', rains: 'cloud-rain' };
 
 const crowdColors = {
   low:    'text-emerald-600',
@@ -107,7 +109,7 @@ export default function BestTimeToVisit() {
                 : 'bg-cream-100 text-teal-700 hover:bg-cream-200'
             }`}
           >
-            {p.emoji} {p.name}
+            <SiteIcon name={p.emoji} className="mr-1.5 align-[-2px]" />{p.name}
           </button>
         ))}
       </div>
@@ -128,7 +130,7 @@ export default function BestTimeToVisit() {
               }`}
             >
               <div className="text-xs font-bold uppercase tracking-wider">{m}</div>
-              <div className="mt-1 text-lg">{d.weather === 'dry' ? '☀️' : '🌧️'}</div>
+              <SiteIcon name={weatherIcon[d.weather]} title={weatherLabel[d.weather]} className="mt-1 mx-auto text-lg" />
               {/* Crowd dots */}
               <div className="flex justify-center gap-0.5 mt-1">
                 {[1, 2, 3].map(n => (
@@ -153,9 +155,10 @@ export default function BestTimeToVisit() {
           <div className="sm:col-span-2">
             <div className="flex items-center gap-3 flex-wrap mb-4">
               <span className="font-display text-2xl text-teal-800">
-                {park.emoji} {MONTHS[selectedMonth]}
+                <SiteIcon name={park.emoji} className="mr-2 align-[-3px] text-terracotta-500" />{MONTHS[selectedMonth]}
               </span>
-              <span className={`text-xs font-semibold px-3 py-1 rounded-full ${weatherColors[park.months[selectedMonth].weather]}`}>
+              <span className={`inline-flex items-center gap-1 text-xs font-semibold px-3 py-1 rounded-full ${weatherColors[park.months[selectedMonth].weather]}`}>
+                <SiteIcon name={weatherIcon[park.months[selectedMonth].weather]} />
                 {weatherLabel[park.months[selectedMonth].weather]}
               </span>
               <span className={`text-xs font-semibold ${crowdColors[park.months[selectedMonth].crowd]}`}>
@@ -163,15 +166,15 @@ export default function BestTimeToVisit() {
               </span>
             </div>
             <p className="text-teal-700 text-lg leading-relaxed">
-              🦁 <strong>Wildlife:</strong> {park.months[selectedMonth].wildlife}
+              <SiteIcon name="paw" className="mr-1.5 align-[-3px] text-terracotta-500" /><strong>Wildlife:</strong> {park.months[selectedMonth].wildlife}
             </p>
             <p className="mt-3 text-teal-700/80">
-              💡 <em>{park.months[selectedMonth].tip}</em>
+              <SiteIcon name="lightbulb" className="mr-1.5 align-[-3px]" /><em>{park.months[selectedMonth].tip}</em>
             </p>
           </div>
           <div className="flex flex-col gap-3 justify-center">
             <div className={`text-center py-4 rounded-xl ${weatherColors[park.months[selectedMonth].weather]}`}>
-              <div className="text-2xl">{park.months[selectedMonth].weather === 'dry' ? '☀️' : '🌧️'}</div>
+              <SiteIcon name={weatherIcon[park.months[selectedMonth].weather]} className="mx-auto text-2xl" />
               <div className="font-semibold mt-1">{weatherLabel[park.months[selectedMonth].weather]}</div>
             </div>
             <a
@@ -180,7 +183,7 @@ export default function BestTimeToVisit() {
               rel="noreferrer"
               className="text-center bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-xl transition text-sm"
             >
-              📅 Book {MONTHS[selectedMonth]} trip
+              <SiteIcon name="calendar" className="mr-1.5 align-[-2px]" />Book {MONTHS[selectedMonth]} trip
             </a>
           </div>
         </div>
@@ -188,7 +191,9 @@ export default function BestTimeToVisit() {
 
       {/* Legend */}
       <div className="mt-6 flex flex-wrap justify-center gap-6 text-xs text-teal-700/70">
-        <span>☀️ = Dry season &nbsp;|&nbsp; 🌧️ = Rains</span>
+        <span className="inline-flex items-center gap-1.5">
+          <SiteIcon name="sun" /> Dry season &nbsp;|&nbsp; <SiteIcon name="cloud-rain" /> Rains
+        </span>
         <span>● = Quiet &nbsp; ●● = Moderate &nbsp; ●●● = Peak crowds</span>
         <span>Click any month for details</span>
       </div>

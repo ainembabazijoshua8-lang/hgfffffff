@@ -22,6 +22,12 @@ import { BRAND } from '../tokens.js';
 const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY || '';
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN || '';
 
+// Declared up front so the satellite entry can fall back to it. It previously
+// read VECTOR_STYLES.carto.url from inside VECTOR_STYLES' own initializer, which
+// throws (temporal dead zone) whenever VITE_MAPTILER_KEY is unset — the whole
+// map module failed to load and every map showed "Map unavailable".
+const CARTO_VOYAGER_URL = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json';
+
 function mtUrl(path) {
   return MAPTILER_KEY
     ? `https://api.maptiler.com${path}?key=${encodeURIComponent(MAPTILER_KEY)}`
@@ -39,8 +45,8 @@ export const VECTOR_STYLES = {
   carto: {
     id: 'safari-carto',
     label: 'Safari Topo',
-    icon: '🗺️',
-    url: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
+    icon: 'map',
+    url: CARTO_VOYAGER_URL,
     attribution:
       '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/">CARTO</a>',
     envVar: null,
@@ -48,10 +54,10 @@ export const VECTOR_STYLES = {
   satellite: {
     id: 'safari-satellite',
     label: 'Satellite View',
-    icon: '🛰️',
+    icon: 'globe',
     url: MAPTILER_KEY
       ? `https://api.maptiler.com/tiles/satellite-gl-style/style.json?key=${encodeURIComponent(MAPTILER_KEY)}`
-      : VECTOR_STYLES.carto.url,
+      : CARTO_VOYAGER_URL,
     attribution: MAPTILER_KEY
       ? '© <a href="https://www.maptiler.com/">MapTiler</a> © <a href="https://openmaptiles.org/">OpenMapTiles</a>'
       : '© OpenStreetMap contributors — demo tiles',
@@ -60,7 +66,7 @@ export const VECTOR_STYLES = {
   relief: {
     id: 'safari-relief',
     label: 'Elevation Relief',
-    icon: '🏔️',
+    icon: 'mountain',
     url: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
     attribution:
       '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/">CARTO</a>',

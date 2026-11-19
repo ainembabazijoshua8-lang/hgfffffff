@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import ImageLightbox from './ImageLightbox.jsx';
 import { useCurrency } from '../context/CurrencyContext.jsx';
+import { SiteIcon } from './Icons.jsx';
 
 const TIER_LABEL = {
   budget: 'Budget camping',
@@ -15,13 +16,13 @@ const TIER_STYLE = {
 };
 
 const TAG_ICON = {
-  solo: '🧭',
-  couples: '💑',
-  family: '👨‍👩‍👧',
-  group: '👥',
-  honeymoon: '💍',
-  photography: '📷',
-  birding: '🦜',
+  solo: 'compass',
+  couples: 'heart',
+  family: 'users',
+  group: 'users',
+  honeymoon: 'gem',
+  photography: 'camera',
+  birding: 'bird',
 };
 
 export default function TourCard({ tour, onToggleCompare, isComparing }) {
@@ -57,7 +58,7 @@ export default function TourCard({ tour, onToggleCompare, isComparing }) {
             aria-pressed={Boolean(isComparing)}
             aria-label={`${isComparing ? 'Remove' : 'Add'} ${tour.title} ${isComparing ? 'from' : 'to'} comparison`}
           >
-            <span>{isComparing ? '✓ Comparing' : '+ Compare'}</span>
+            <span className="inline-flex items-center gap-1">{isComparing ? <><SiteIcon name="check" /> Comparing</> : '+ Compare'}</span>
           </button>
         )}
       </div>
@@ -81,7 +82,7 @@ export default function TourCard({ tour, onToggleCompare, isComparing }) {
         <div className="mt-3 flex min-h-6 flex-wrap gap-1.5">
           {tour.best_for?.slice(0, 3).map(tag => (
             <span key={tag} className="inline-flex items-center gap-1 rounded-sm bg-mist px-2 py-1 text-[10px] font-medium capitalize text-teal-800">
-              <span aria-hidden="true">{TAG_ICON[tag] || '•'}</span>{tag}
+              <SiteIcon name={TAG_ICON[tag] || 'check'} />{tag}
             </span>
           ))}
         </div>

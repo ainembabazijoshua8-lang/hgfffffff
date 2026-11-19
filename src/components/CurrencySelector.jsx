@@ -30,7 +30,6 @@ export default function CurrencySelector({ className = '', align = 'right' }) {
         aria-haspopup="true"
         title="Change currency"
       >
-        <span className="hidden 2xl:inline text-sm leading-none">{current.flag}</span>
         <span className="font-bold text-teal-700">{current.code}</span>
         <span className="text-teal-500/80">{current.symbol.trim()}</span>
         <svg
@@ -68,12 +67,9 @@ export default function CurrencySelector({ className = '', align = 'right' }) {
                 }`}
                 role="menuitem"
               >
-                <div className="flex items-center gap-2">
-                  <span className="text-base">{curr.flag}</span>
-                  <div>
-                    <div className="font-semibold">{curr.code}</div>
-                    <div className="text-[10px] text-teal-500/80">{curr.name}</div>
-                  </div>
+                <div>
+                  <div className="font-semibold">{curr.code}</div>
+                  <div className="text-[10px] text-teal-500/80">{curr.name}</div>
                 </div>
                 <span className="font-mono text-xs font-semibold text-teal-600">
                   {curr.symbol.trim()}

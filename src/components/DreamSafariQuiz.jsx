@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fallbackTours } from '../data/fallbackTours.js';
 import { useCurrency } from '../context/CurrencyContext.jsx';
+import { ICON_NODES, SiteIcon } from './Icons.jsx';
 
 const questions = [
   {
@@ -9,10 +10,10 @@ const questions = [
     eyebrow: 'Who is coming?',
     title: 'Choose your kind of journey',
     options: [
-      { value: 'couples', label: 'A private escape for two', icon: '◌', tags: ['couples', 'honeymoon'] },
-      { value: 'family', label: 'A first safari with family', icon: '⌂', tags: ['family'] },
-      { value: 'wildlife', label: 'A deep wildlife immersion', icon: '◉', tags: ['wildlife', 'photography'] },
-      { value: 'solo', label: 'A spirited solo expedition', icon: '↗', tags: ['solo', 'group'] },
+      { value: 'couples', label: 'A private escape for two', icon: 'heart', tags: ['couples', 'honeymoon'] },
+      { value: 'family', label: 'A first safari with family', icon: 'users', tags: ['family'] },
+      { value: 'wildlife', label: 'A deep wildlife immersion', icon: 'binoculars', tags: ['wildlife', 'photography'] },
+      { value: 'solo', label: 'A spirited solo expedition', icon: 'compass', tags: ['solo', 'group'] },
     ],
   },
   {
@@ -20,10 +21,10 @@ const questions = [
     eyebrow: 'What calls you?',
     title: 'Pick your unmissable moment',
     options: [
-      { value: 'migration', label: 'The Great Migration', icon: '≈', tags: ['migration', 'wildlife', 'serengeti'] },
-      { value: 'big-five', label: 'The Big Five', icon: '✦', tags: ['wildlife', 'ngorongoro', 'tarangire'] },
-      { value: 'culture', label: 'People, place and story', icon: '⌁', tags: ['cultural', 'maasai'] },
-      { value: 'slow', label: 'Time to breathe deeply', icon: '☼', tags: ['luxury', 'couples', 'relaxation'] },
+      { value: 'migration', label: 'The Great Migration', icon: 'waves', tags: ['migration', 'wildlife', 'serengeti'] },
+      { value: 'big-five', label: 'The Big Five', icon: 'paw', tags: ['wildlife', 'ngorongoro', 'tarangire'] },
+      { value: 'culture', label: 'People, place and story', icon: 'users', tags: ['cultural', 'maasai'] },
+      { value: 'slow', label: 'Time to breathe deeply', icon: 'sun', tags: ['luxury', 'couples', 'relaxation'] },
     ],
   },
   {
@@ -164,7 +165,9 @@ export default function DreamSafariQuiz() {
                       className="group min-h-24 rounded-xl border border-white/15 bg-white/5 p-4 text-left transition hover:-translate-y-0.5 hover:border-terracotta-300 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta-300"
                     >
                       <span className="flex items-center justify-between gap-3">
-                        <span className="text-2xl text-gold-400" aria-hidden="true">{option.icon}</span>
+                        {ICON_NODES[option.icon]
+                          ? <SiteIcon name={option.icon} className="text-2xl text-gold-400" />
+                          : <span className="text-2xl text-gold-400" aria-hidden="true">{option.icon}</span>}
                         <span className="text-xs text-cream-100/50 transition group-hover:text-cream-50">Choose</span>
                       </span>
                       <span className="mt-3 block text-sm font-medium leading-snug">{option.label}</span>

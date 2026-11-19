@@ -11,6 +11,7 @@ import BigFiveTracker from '../components/BigFiveTracker.jsx';
 import LodgeTierVisualizer from '../components/LodgeTierVisualizer.jsx';
 import MeetTheTeam from '../components/MeetTheTeam.jsx';
 import { fallbackFeaturedTours } from '../data/fallbackTours.js';
+import { SiteIcon } from '../components/Icons.jsx';
 
 const heroSlides = [
   {
@@ -18,21 +19,24 @@ const heroSlides = [
     title: 'Experience the wild.',
     italic: 'Unforgettable East African safaris.',
     subtitle: 'Wildlife safaris, cultural journeys, and conservation-led experiences across Tanzania and Kenya.',
-    badge: '🦁 Serengeti & Ngorongoro',
+    badge: 'Serengeti & Ngorongoro',
+    badgeIcon: 'paw',
   },
   {
     image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=2000&q=80',
     title: 'Witness the Migration.',
     italic: '1.5 million animals in motion.',
     subtitle: 'From thunderous Mara River crossings to newborn calves in the southern Serengeti plains.',
-    badge: '🦓 The Great Migration',
+    badge: 'The Great Migration',
+    badgeIcon: 'paw',
   },
   {
     image: 'https://images.unsplash.com/photo-1547970810-dc1eac37d174?auto=format&fit=crop&w=2000&q=80',
     title: 'Giants beneath Baobabs.',
     italic: 'Tarangire elephant sanctuary.',
     subtitle: 'Hundreds of elephants wandering ancient baobab riverbeds and golden acacia savannas.',
-    badge: '🐘 Tarangire Baobabs',
+    badge: 'Tarangire Baobabs',
+    badgeIcon: 'tree',
   },
 ];
 
@@ -139,7 +143,8 @@ export default function HomePage() {
         <div className="relative z-20 container-x pt-14 sm:pt-20 text-cream-50">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-2 animate-slide-up" style={{ animationDelay: '100ms' }}>
             <span className="eyebrow text-terracotta-300 drop-shadow-md">Adventure & Tours · East Africa</span>
-            <span className="text-xs text-cream-50/90 font-medium">
+            <span className="inline-flex items-center gap-1.5 text-xs text-cream-50/90 font-medium">
+              <SiteIcon name={slide.badgeIcon} className="text-terracotta-300" />
               {slide.badge}
             </span>
           </div>
@@ -271,14 +276,21 @@ export default function HomePage() {
               Hot-air balloon at dawn over the Serengeti with a champagne bush breakfast ($599 net). Walking safari with Maasai trackers. Snorkeling in Zanzibar coral reefs.
             </p>
             <ul className="mt-6 grid grid-cols-2 gap-x-6 gap-y-3 text-teal-800 text-sm font-medium">
-              <li>🎈 Hot-air balloon flights (~$599/person)</li>
-              <li>🚁 Light aircraft scenic transfers</li>
-              <li>🚶 Guided walking safaris in Tarangire</li>
-              <li>🦁 Night game drives in Lake Manyara</li>
-              <li>🏕️ Authentic Maasai boma visits</li>
-              <li>⛵ Zanzibar sunset Dhow sailing</li>
-              <li>🏞️ Bush dinners & sundowners</li>
-              <li>💆 Savanna spa & wellness</li>
+              {[
+                ['balloon', 'Hot-air balloon flights (~$599/person)'],
+                ['plane', 'Light aircraft scenic transfers'],
+                ['footprints', 'Guided walking safaris in Tarangire'],
+                ['moon', 'Night game drives in Lake Manyara'],
+                ['tent', 'Authentic Maasai boma visits'],
+                ['sailboat', 'Zanzibar sunset Dhow sailing'],
+                ['utensils', 'Bush dinners & sundowners'],
+                ['flower', 'Savanna spa & wellness'],
+              ].map(([icon, label]) => (
+                <li key={label} className="flex items-start gap-2">
+                  <SiteIcon name={icon} className="mt-0.5 text-terracotta-500" />
+                  <span>{label}</span>
+                </li>
+              ))}
             </ul>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <Link to="/activities" className="btn-primary inline-flex">Browse all activities</Link>
@@ -297,13 +309,13 @@ export default function HomePage() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: '🧭', t: 'Local Tanzanian guides', d: 'Born-and-raised local guides who read tracks and savanna scent like an open book.' },
-              { icon: '🌿', t: 'Conservation-led', d: 'Community-first ethics supporting local schools, anti-poaching, and village bomas.' },
-              { icon: '⭐', t: 'No Hidden Park Fees', d: 'All mandatory TANAPA, NCAA Crater, and concession fees pre-calculated in pricing.' },
-              { icon: '🛡', t: 'Travel insurance included', d: 'Comprehensive travel insurance on every package, plus AMREF Flying Doctors emergency medical evacuation.' },
+              { icon: 'compass', t: 'Local Tanzanian guides', d: 'Born-and-raised local guides who read tracks and savanna scent like an open book.' },
+              { icon: 'leaf', t: 'Conservation-led', d: 'Community-first ethics supporting local schools, anti-poaching, and village bomas.' },
+              { icon: 'star', t: 'No Hidden Park Fees', d: 'All mandatory TANAPA, NCAA Crater, and concession fees pre-calculated in pricing.' },
+              { icon: 'shield', t: 'Travel insurance included', d: 'Comprehensive travel insurance on every package, plus AMREF Flying Doctors emergency medical evacuation.' },
             ].map(f => (
               <div key={f.t} className="bg-cream-50/5 backdrop-blur border border-cream-50/10 rounded-2xl p-6 hover:bg-cream-50/10 transition shadow-sm">
-                <div className="text-3xl mb-3">{f.icon}</div>
+                <SiteIcon name={f.icon} className="text-3xl mb-3 text-terracotta-300" />
                 <h3 className="font-display text-xl mb-2 text-cream-50">{f.t}</h3>
                 <p className="text-cream-100/80 text-sm leading-relaxed">{f.d}</p>
               </div>
@@ -377,7 +389,8 @@ export default function HomePage() {
               rel="noopener noreferrer"
               className="border-2 border-cream-50 text-cream-50 hover:bg-cream-50 hover:text-teal-900 rounded-full px-8 py-4 font-bold transition flex items-center gap-2"
             >
-              <span>💬 Ask on WhatsApp</span>
+              <SiteIcon name="whatsapp" className="text-lg" />
+              <span>Ask on WhatsApp</span>
             </a>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ACTIVITY_CATALOG } from '../data/activitiesCatalog.js';
+import { CloseIcon, SearchIcon } from './Icons.jsx';
 
 const SITE_SERVICES = [
   { id: 'all-tours', title: 'All safari tours', description: 'Browse every curated safari journey', to: '/tours', type: 'Service' },
@@ -47,7 +48,24 @@ export default function SiteSearch({ isMobile = false }) {
   const [query, setQuery] = useState('');
   const [tours, setTours] = useState(toursCache || []);
   const [open, setOpen] = useState(false);
+  // Desktop shows only an icon button; the field opens in a panel on click so
+  // the header keeps its room for navigation. The mobile drawer keeps a full field.
+  const compact = !isMobile;
+  const [expanded, setExpanded] = useState(false);
   const searchRef = useRef(null);
+  const inputRef = useRef(null);
+  const toggleRef = useRef(null);
+
+  useEffect(() => {
+    if (expanded) inputRef.current?.focus();
+  }, [expanded]);
+
+  function collapse({ restoreFocus = false } = {}) {
+    setOpen(false);
+    if (!compact) return;
+    setExpanded(false);
+    if (restoreFocus) toggleRef.current?.focus();
+  }
 
   useEffect(() => {
     let cancelled = false;
@@ -57,10 +75,11 @@ export default function SiteSearch({ isMobile = false }) {
 
   useEffect(() => {
     const closeOnOutsideClick = event => {
-      if (searchRef.current && !searchRef.current.contains(event.target)) setOpen(false);
+      if (searchRef.current && !searchRef.current.contains(event.target)) collapse();
     };
     const closeOnEscape = event => {
-      if (event.key === 'Escape') setOpen(false);
+      if (event.key === 'Escape' && searchRef.current?.contains(document.activeElement)) collapse({ restoreFocus: true });
+      else if (event.key === 'Escape') collapse();
     };
     document.addEventListener('mousedown', closeOnOutsideClick);
     document.addEventListener('keydown', closeOnEscape);
@@ -98,80 +117,100 @@ export default function SiteSearch({ isMobile = false }) {
   const popularResults = [...SITE_SERVICES.slice(0, 5), ...activityResults.slice(0, 3)];
   const visibleResults = term ? results : popularResults;
 
-  return (
-    <div
-      ref={searchRef}
-      className={`relative ${isMobile ? 'w-full' : 'w-32 xl:w-36 2xl:w-52 shrink-0'}`}
-    >
+  const field = (
+    <>
       <label htmlFor={inputId} className="sr-only">Search tours, activities and services</label>
       <div className="relative">
-        <svg
-          aria-hidden="true"
-          className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-teal-500"
-          width="15"
-          height="15"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <circle cx="11" cy="11" r="7" />
-          <path d="m20 20-4-4" />
-        </svg>
+        <SearchIcon className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[15px] text-teal-500" />
         <input
+          ref={inputRef}
           id={inputId}
           type="search"
           value={query}
           onChange={event => { setQuery(event.target.value); setOpen(true); }}
           onFocus={() => setOpen(true)}
-          placeholder="Search..."
-          className="field h-9 xl:h-10 rounded-full pl-8 xl:pl-9 pr-3 text-xs xl:text-sm bg-white/90 focus:bg-white border-savanna-200"
+          placeholder="Search tours, activities..."
+          className="field h-10 rounded-full pl-9 pr-3 text-sm bg-white/90 focus:bg-white border-savanna-200"
           aria-expanded={open}
           aria-controls={resultsId}
           aria-autocomplete="list"
           role="combobox"
         />
       </div>
+    </>
+  );
 
-      {open && (
-        <div
-          id={resultsId}
-          role="listbox"
-          className={`absolute top-[calc(100%+0.5rem)] z-50 max-h-[min(70vh,28rem)] overflow-y-auto rounded-2xl border border-savanna-200 bg-white p-2 shadow-2xl animate-fade-up ${
-            isMobile
-              ? 'inset-x-0 w-full'
-              : 'right-0 w-[min(22rem,calc(100vw-1.5rem))]'
-          }`}
+  const resultsList = (
+    <div
+      id={resultsId}
+      role="listbox"
+      className={compact
+        ? 'mt-2 max-h-[min(60vh,26rem)] overflow-y-auto'
+        : 'absolute inset-x-0 top-[calc(100%+0.5rem)] z-50 w-full max-h-[min(70vh,28rem)] overflow-y-auto rounded-2xl border border-savanna-200 bg-white p-2 shadow-2xl animate-fade-up'}
+    >
+      <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-teal-500 border-b border-savanna-100 mb-1">
+        {term ? `Results for "${query}"` : 'Popular destinations & tours'}
+      </div>
+      {visibleResults.length > 0 ? visibleResults.map(result => (
+        <Link
+          key={`${result.type}-${result.id}`}
+          to={result.to}
+          role="option"
+          onClick={() => { collapse(); setQuery(''); }}
+          className="block rounded-xl px-3 py-2 hover:bg-cream-100 focus:bg-cream-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta-300 transition"
         >
-          <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-teal-500 border-b border-savanna-100 mb-1">
-            {term ? `Results for "${query}"` : 'Popular destinations & tours'}
+          <div className="flex items-center justify-between gap-2">
+            <span className="font-semibold text-xs sm:text-sm text-teal-800">{result.title}</span>
+            <span className="shrink-0 text-[9px] uppercase font-bold tracking-wider text-terracotta-400 bg-terracotta-50 px-1.5 py-0.5 rounded">{result.type}</span>
           </div>
-          {visibleResults.length > 0 ? visibleResults.map(result => (
-            <Link
-              key={`${result.type}-${result.id}`}
-              to={result.to}
-              role="option"
-              onClick={() => { setOpen(false); setQuery(''); }}
-              className="block rounded-xl px-3 py-2 hover:bg-cream-100 focus:bg-cream-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta-300 transition"
-            >
-              <div className="flex items-center justify-between gap-2">
-                <span className="font-semibold text-xs sm:text-sm text-teal-800">{result.title}</span>
-                <span className="shrink-0 text-[9px] uppercase font-bold tracking-wider text-terracotta-400 bg-terracotta-50 px-1.5 py-0.5 rounded">{result.type}</span>
-              </div>
-              <span className="mt-0.5 block text-[11px] text-teal-700/70 truncate">{result.description}</span>
-            </Link>
-          )) : (
-            <div className="px-3 py-4 text-xs text-teal-700/70">No matching tours or activities. Try another search term.</div>
-          )}
-          {term && (
-            <Link
-              to={`/tours?q=${encodeURIComponent(query)}`}
-              onClick={() => { setOpen(false); setQuery(''); }}
-              className="mt-1 block border-t border-savanna-100 px-3 py-2.5 text-xs font-semibold text-terracotta-400 hover:text-terracotta-500"
-            >
-              See all results in tour catalog →
-            </Link>
-          )}
+          <span className="mt-0.5 block text-[11px] text-teal-700/70 truncate">{result.description}</span>
+        </Link>
+      )) : (
+        <div className="px-3 py-4 text-xs text-teal-700/70">No matching tours or activities. Try another search term.</div>
+      )}
+      {term && (
+        <Link
+          to={`/tours?q=${encodeURIComponent(query)}`}
+          onClick={() => { collapse(); setQuery(''); }}
+          className="mt-1 block border-t border-savanna-100 px-3 py-2.5 text-xs font-semibold text-terracotta-400 hover:text-terracotta-500"
+        >
+          See all results in tour catalog →
+        </Link>
+      )}
+    </div>
+  );
+
+  if (!compact) {
+    return (
+      <div ref={searchRef} className="relative w-full">
+        {field}
+        {open && resultsList}
+      </div>
+    );
+  }
+
+  return (
+    <div ref={searchRef} className="relative shrink-0">
+      <button
+        ref={toggleRef}
+        type="button"
+        onClick={() => (expanded ? collapse() : setExpanded(true))}
+        aria-expanded={expanded}
+        aria-label={expanded ? 'Close search' : 'Search the site'}
+        title="Search"
+        className={`flex h-9 w-9 xl:h-10 xl:w-10 items-center justify-center rounded-full border transition focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta-300 ${
+          expanded
+            ? 'border-teal-800 bg-teal-800 text-cream-50'
+            : 'border-savanna-200 bg-white/90 text-teal-700 hover:border-terracotta-300 hover:text-teal-900'
+        }`}
+      >
+        {expanded ? <CloseIcon className="text-base" /> : <SearchIcon className="text-[17px]" />}
+      </button>
+
+      {expanded && (
+        <div className="absolute right-0 top-[calc(100%+0.75rem)] z-50 w-[min(24rem,calc(100vw-1.5rem))] rounded-2xl border border-savanna-200 bg-white p-3 shadow-2xl animate-fade-up">
+          {field}
+          {open && resultsList}
         </div>
       )}
     </div>
